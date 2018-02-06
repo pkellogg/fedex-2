@@ -180,6 +180,44 @@ font-family:roboto;
 </form> 
 </template>
 
+<!----------------------------------------------FEDEX PARAGRAPH COMPONENT---------------------------------->
+<template id="fedexparagraph">
+<style>
+p {	width:400px;
+	font-family:roboto;
+	font-size:18px;
+	}
+</style>
+<p class="item_content" contenteditable="true">Enter text</p>
+</template>
+
+<!----------------------------------------------------FEDEX TABLE COMPONENT------------------------------>
+<template id="fedextable">
+<style>
+.fedexTable {
+	font-weight: normal; 
+	position:relative;
+	z-index:250;
+	font-size:14px;
+	font-family:roboto;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding:5px;
+	border: 1px solid gray;
+}
+</style>
+
+<table class="fedexTable"> 
+<tr>
+<th>Enter Text</th>
+<th>Enter Text</th>
+<th>Enter Text</th>
+</tr>
+</table>
+</template>
+
 <!--Note: the variable for each constructor must be unique...as in tmplbutton or tmplheader-->
 <!---------------------------------------------COMPONENT SCRIPTS------------------------------------->
 <script>
@@ -245,6 +283,26 @@ customElements.define('fedex-radiobutton', class extends HTMLElement {
 	}
 });
 
+//fedexparagraphclass
+let tmplparagraph = document.querySelector('#fedexparagraph');
+customElements.define('fedex-paragraph', class extends HTMLElement {
+    constructor() {
+      super();  
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmplparagraph.content.cloneNode(true));
+	}
+});
+
+//fedextableclass
+let tmpltable = document.querySelector('#fedextable');
+customElements.define('fedex-table', class extends HTMLElement {
+    constructor() {
+      super();  
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmpltable.content.cloneNode(true));
+	}
+});
+
 </script>
 
 <!------------------------------------------------------CSS------------------------------------------->
@@ -293,19 +351,7 @@ html, body {
 
 .ui-menu { width: 150px; }
 
-.fedexTable {
-	font-weight: normal; 
-	position:relative;
-	z-index:250;
-	font-size:14px;
-	font-family:roboto;
-	border-collapse: collapse;
-}
 
-th, td {
-	padding:5px;
-	border: 1px solid gray;
-}
 
 /*main menu*/
 
@@ -378,10 +424,7 @@ th, td {
 .ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
 .ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}
 
-p {	width:400px;
-	font-family:roboto;
-	font-size:18px;
-	}
+
 	
 /*Drop Down Nav Bar*/
 .fedexDropMenu {
@@ -905,61 +948,53 @@ $(".fxradiobuttonclass").draggable( {
 olddropbutton = droptarget;
 }<!--end if-->
 
-<!------------------------------------------------------------HTML Paragraph (NEW) 6-->
+<!--------------------------------------------------------FEDEX PARAGRAPH COMPONENT----------------->
  if ($(draggable).attr('id') == "paragraphicon") { 
-olddropheader = droptarget;  
-var temp = document.getElementsByTagName("template")[6];
-var clon = temp.content.cloneNode(true);
-$(droptarget).append(clon);
-$('.item_content').resizable();
-$('.item_content').draggable( {
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-paragraph id="fxparagraphid" class="fxparagraphclass" contenteditable="true"></fedex-paragraph>');
+$(".fxparagraphclass").resizable();
+$(".fxparagraphclass").draggable( {
 	containment: "window",   
 	cursor: 'move'  
 });
-} <!--end if-->
- if ($(draggable).attr('id') == "mary" && olddropheader != droptarget) 
- {   
- $(draggable).remove();
- var temp = document.getElementsByTagName("template")[6];
-var clon = temp.content.cloneNode(true);
-$(droptarget).append(clon);
- $('.item_content').draggable( {
-	 containment: "window",   
-	 cursor: 'move' 
-});
- $('.item_content').resizable();
- olddropheader = droptarget;
- } <!--end if-->
  
-<!--------------------------------------------------------------HTML TABLE-->
- <!--TABLE-->
- if ($(draggable).attr('id') == "tableIcon") { 
-olddropheader = droptarget;  
-var temp = document.getElementsByTagName("template")[7];
-var clon = temp.content.cloneNode(true);
-$(droptarget).append(clon);
-$('.fedexTable').resizable();
-$('.fedexTable').draggable( {
+} <!--end if-->
+if ($(draggable).attr('id') == "fxparagraphid" && olddropbutton != droptarget) 
+{ 
+$(ui.draggable).remove();
+$(droptarget).append('<fedex-paragraph id="fxparagraphid" class="fxparagraphclass"></fedex-paragraph>');
+ 
+$(".fxparagraphclass").resizable();
+$(".fxparagraphclass").draggable( {
 	containment: "window",   
 	cursor: 'move'  
 });
-} <!--end if-->
-
-
-if ($(draggable).attr('id') == "avalon" && olddropheader != droptarget) 
- {   
- $(draggable).remove();
- var temp = document.getElementsByTagName("template")[7];
-var clon = temp.content.cloneNode(true);
-$(droptarget).append(clon);
- $('.fedexTable').draggable( {
-	 containment: "window",   
-	 cursor: 'move' 
-});
- $('.fedexTable').resizable();
- olddropheader = droptarget;
- } <!--end if-->
+olddropbutton = droptarget;
+}<!--end if-->
  
+<!--------------------------------------------------------------FEDEX TABLE COMPONENT------------------------->
+if ($(draggable).attr('id') == "tableicon") { 
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-table id="fxtableid" class="fxtableclass" contenteditable="true"></fedex-table>');
+$(".fxtableclass").resizable();
+$(".fxtableclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+ 
+} <!--end if-->
+if ($(draggable).attr('id') == "fxtableid" && olddropbutton != droptarget) 
+{ 
+$(ui.draggable).remove();
+$(droptarget).append('<fedex-table id="fxtableid" class="fxtableclass"></fedex-table>');
+ 
+$(".fxtableclass").resizable();
+$(".fxtableclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+olddropbutton = droptarget;
+}<!--end if-->
  
 <!--------------------------------------------------------HORIZONTAL DROP MENU 8-->
  if ($(draggable).attr('id') == "dropMenuIcon") { 
@@ -1129,22 +1164,6 @@ function dropMenuHelper( event)  {  return '<i class="material-icons md-36" id="
 
 <!--TEMPLATES-->
  
-<!--html paragraph 6-->
-<template>
-<p class="item_content" id="mary" contenteditable="true">Enter text</p>
-</template>
-
-<!--html table 7-->
-<template>
-<table class="fedexTable" id="avalon" contenteditable="true"> 
-<tr>
-<th>Enter Text</th>
-<th>Enter Text</th>
-<th>Enter Text</th>
-</tr>
-</table>
-</template>
-
 <!--drop menu 8-->
 <template>
 <ul class="fedexDropMenu" id="tracy"><li><a href="#home">Home</a></li><li><a href="#news">News</a></li><li class="dropdown"><a href="javascript:void(0)" class="dropbtn">Dropdown</a><div class="dropdown-content"><a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a></div></li></u>
