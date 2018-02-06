@@ -218,6 +218,67 @@ th, td {
 </table>
 </template>
 
+<!----------------------------------------------------FEDEX DROP DOWN MENU COMPONENT----------------------->
+<template id="fedexdropdownmenu">
+<style>
+.fedexDropMenu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(77,20,140);
+	width:80%;
+	max-width:100%;
+}
+
+li {
+    float: left;
+}
+
+li a, .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+	
+}
+
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgb(255,102,0);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+</style>
+
+<ul class="fedexDropMenu"><li><a href="#home">Home</a></li><li><a href="#news">News</a></li><li class="dropdown"><a href="javascript:void(0)" class="dropbtn">Dropdown</a><div class="dropdown-content"><a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a></div></li></u>
+</template>
+
 <!--Note: the variable for each constructor must be unique...as in tmplbutton or tmplheader-->
 <!---------------------------------------------COMPONENT SCRIPTS------------------------------------->
 <script>
@@ -300,6 +361,16 @@ customElements.define('fedex-table', class extends HTMLElement {
       super();  
       let shadowRoot = this.attachShadow({mode: 'open'});
       shadowRoot.appendChild(tmpltable.content.cloneNode(true));
+	}
+});
+
+//fedexdropdownmenuclass
+let tmpldropdownmenu = document.querySelector('#fedexdropdownmenu');
+customElements.define('fedex-dropdownmenu', class extends HTMLElement {
+    constructor() {
+      super();  
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmpldropdownmenu.content.cloneNode(true));
 	}
 });
 
@@ -426,60 +497,6 @@ html, body {
 
 
 	
-/*Drop Down Nav Bar*/
-.fedexDropMenu {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: rgb(77,20,140);
-	width:80%;
-	max-width:100%;
-}
-
-li {
-    float: left;
-}
-
-li a, .dropbtn {
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-li a:hover, .dropdown:hover .dropbtn {
-    background-color: red;
-	
-}
-
-li.dropdown {
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: rgb(255,102,0);
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
-
-.dropdown-content a:hover {background-color: #f1f1f1}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
 
 
 /*SLIDER SWITCH*/
@@ -698,24 +715,18 @@ $('#checkboxicon').draggable( {
  helper:tableHelper
   })
   
-   $('#dropMenuicon').draggable( {
+   $('#dropmenuicon').draggable( {
 // containment: 'document',   
  cursor: 'move',
  helper:dropMenuHelper
   })
    
-
 //$('.mainheader').draggable( {
  //containment: 'document',   
  //cursor: 'move'
  // })
 
-
-
-
 <!--this function gets the name of the drop target as the element dragged is over the target-->
-
-
 $(function() {
  
 $("body").droppable({
@@ -996,32 +1007,29 @@ $(".fxtableclass").draggable( {
 olddropbutton = droptarget;
 }<!--end if-->
  
-<!--------------------------------------------------------HORIZONTAL DROP MENU 8-->
- if ($(draggable).attr('id') == "dropMenuIcon") { 
-olddropheader = droptarget;  
-var temp = document.getElementsByTagName("template")[8];
-var clon = temp.content.cloneNode(true);
-$(droptarget).append(clon);
-$('.fedexDropMenu').resizable();
-$('.fedexDropMenu').draggable( {
+<!--------------------------------------------------------FEDEX DROP DOWN MENU COMPONENT----------------->
+if ($(draggable).attr('id') == "dropmenuicon") { 
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-dropdownmenu id="fxdropdownmenuid" class="fxdropdownmenuclass"></fedex-dropdownmenu>');
+$(".fxdropdownmenuclass").resizable();
+$(".fxdropdownmenuclass").draggable( {
 	containment: "window",   
 	cursor: 'move'  
 });
-
+ 
 } <!--end if-->
- if ($(draggable).attr('id') == "tracy" && olddropheader != droptarget) 
- {   
- $(draggable).remove();
- var temp = document.getElementsByTagName("template")[8];
-var clon = temp.content.cloneNode(true);
-$(droptarget).append(clon);
-$('.fedexDropMenu').resizable();
-$('.fedexDropMenu').draggable( {
+if ($(draggable).attr('id') == "fxdropdownmenuid" && olddropbutton != droptarget) 
+{ 
+$(ui.draggable).remove();
+$(droptarget).append('<fedex-dropdownmenu id="fxdropdownmenuid" class="fxdropdownmenuclass"></fedex-dropdownmenu>');
+ 
+$(".fxdropdownmenuclass").resizable();
+$(".fxdropdownmenuclass").draggable( {
 	containment: "window",   
 	cursor: 'move'  
 });
- olddropheader = droptarget;
- } <!--end if-->
+olddropbutton = droptarget;
+}<!--end if-->
  
 <!--mdlSlider-->
 //if ($(draggable).attr('id') == "slidericon") {  //only do this if the drag object is switchicon
@@ -1073,7 +1081,7 @@ function paragraphHelper( event)  {  return '<i class="material-icons md-36" id=
 function checkboxHelper( event)  {  return '<i class="material-icons md-36" id="checkboxicon">check_box</i><BR>';}
 function radioHelper( event)  {  return '<i class="material-icons md-36" id="radioicon">radio_button_checked</i><BR>';}
 function tableHelper( event)  {  return '<i class="material-icons md-36" id="tableicon">border_all</i><BR>';}
-function dropMenuHelper( event)  {  return '<i class="material-icons md-36" id="dropMenuicon">menu</i><BR>';}
+function dropMenuHelper( event)  {  return '<i class="material-icons md-36" id="dropmenuicon">menu</i><BR>';}
 //var x = $(".mainheader").offset();
          //alert("Top: " + x.top + " Left: " + x.left); //this works
 </script>
@@ -1137,7 +1145,7 @@ function dropMenuHelper( event)  {  return '<i class="material-icons md-36" id="
 	<i class="material-icons md-18 md-light" id="checkboxicon">check_box</i><br /><span style="color:white;font-size:12px;">Check Box</span><BR>	
 	<i class="material-icons md-18 md-light" id="radioicon">radio_button_checked</i><br /><span style="color:white;font-size:12px;">Radio</span><BR> 
 	<i class="material-icons md-18 md-light" id="tableicon">border_all</i><br /><span style="color:white;font-size:12px;">Table</span><BR>
-	<i class="material-icons md-18 md-light" id="dropMenuicon">menu</i><br /><span style="color:white;font-size:12px;">Drop Menu</span><BR>
+	<i class="material-icons md-18 md-light" id="dropmenuicon">menu</i><br /><span style="color:white;font-size:12px;">Drop Menu</span><BR>
 	<i class="material-icons md-18 md-light" id="paragraphicon">present_to_all</i><br /><span style="color:white;font-size:12px;">Form</span><BR>
 	<i class="material-icons md-18 md-light" id="paragraphicon">link</i><br /><span style="color:white;font-size:12px;">Link</span><BR> 
 	<!--<i class="material-icons md-36" id="slidericon">keyboard</i><BR>-->
@@ -1160,14 +1168,6 @@ function dropMenuHelper( event)  {  return '<i class="material-icons md-36" id="
 	<div id="stuff6" class="mdl-cell mdl-cell--2-col tom paul"></div>
 	<div id="stuff7" class="mdl-cell mdl-cell--3-col tom paul"></div>
 </div> 
-
-
-<!--TEMPLATES-->
- 
-<!--drop menu 8-->
-<template>
-<ul class="fedexDropMenu" id="tracy"><li><a href="#home">Home</a></li><li><a href="#news">News</a></li><li class="dropdown"><a href="javascript:void(0)" class="dropbtn">Dropdown</a><div class="dropdown-content"><a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a></div></li></u>
-</template>
 
 </body>
 
