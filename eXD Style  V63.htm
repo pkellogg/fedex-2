@@ -422,8 +422,6 @@ html, body {
 
 .ui-menu { width: 150px; }
 
-
-
 /*main menu*/
 
 #jsddm
@@ -482,7 +480,6 @@ html, body {
 .material-icons.fedexorange { color: rgb(255,102,0);}
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 
-
 .ui-resizable { position: relative;}
 .ui-resizable-handle { position: absolute;font-size: 0.1px; display: block; }
 .ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
@@ -494,10 +491,6 @@ html, body {
 .ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
 .ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
 .ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}
-
-
-	
-
 
 /*SLIDER SWITCH*/
 .switch {
@@ -621,7 +614,6 @@ $( function() {
 
   } );
   
-  
 var timeout    = 500;
 var closetimer = 0;
 var ddmenuitem = 0;
@@ -647,9 +639,6 @@ $(document).ready(function()
    $('#jsddm > li').bind('mouseout',  jsddm_timer)});
 
 document.onclick = jsddm_close;
-
-
-
 
 $( init );
 
@@ -746,9 +735,6 @@ $(".mdl-cell").droppable({
 });
 }); 
 
-
-
-
 $('body').droppable( {    
 drop: handleDropEvent  } );
 }
@@ -756,8 +742,6 @@ drop: handleDropEvent  } );
 
 function handleDropEvent( event, ui ) {
 var draggable = ui.draggable;  //object being dragged
-
-
 
 <!------------------------------------BEGIN ELEMENT AND COMPONENT DEFINITIONS--------------------------------->
 
@@ -1031,43 +1015,6 @@ $(".fxdropdownmenuclass").draggable( {
 olddropbutton = droptarget;
 }<!--end if-->
  
-<!--mdlSlider-->
-//if ($(draggable).attr('id') == "slidericon") {  //only do this if the drag object is switchicon
-//$(document).ready(function () {	 
-    //$(droptarget).append('<input  class="joe"  type="range">');});
-	//$('.joe').draggable( {
-	//containment: "window",   
-	//cursor: 'move',
-	//cancel: null
-//});
-//} <!--end if-->
-
-<!--IMG (NEW)-->
-//if ($(draggable).attr('id') == "imgicon") { 
-//olddropheader = droptarget;  
-//$(droptarget).append('<img id="mary" class="allimage" onclick="changeImage(this);">');
-
-//$('.allimage').draggable( {
-	//containment: "window",   
-	//cursor: 'move' 
-	 
-//});
-//$('.allimage').resizable();
-//} <!--end if-->
-
-//if ($(draggable).attr('id') == "mary" && olddropheader != droptarget) 
-//{   
-//$(draggable).remove();
-//$(droptarget).append('<img class="allimage" onclick="changeImage(this);">');
-//$('.allimage').draggable( {
-	//containment: "window",   
-	//cursor: 'move' 
-	 
-//});
-//$('.allimage').resizable();
-//olddropheader = droptarget;
-//} <!--end if-->
-
 } <!--handleDropEvent-->
 
 <!--HELPERS-->
@@ -1097,8 +1044,6 @@ function dropMenuHelper( event)  {  return '<i class="material-icons md-36" id="
 <!--FILE IMPORT-->
 <input type="file" id="jim" style="width:100px;position:absolute;top:30px;right:145px;" />
 
- 
-
 <span style="color:white;font-family:arial;font-size:32px;font-weight:bold;padding-left:130px;line-height:2.3;">Fed<span style="color:rgb(255,102,0);font-family:arial;font-size:32px;font-weight:bold;line-height:1.8;">Ex</span></span>
 <span style="color:rgb(153,153,153);font-family:arial;font-size:20px;font-weight:normal;padding-left:20px;line-height:2.3;">Enterprise XD</span>
 
@@ -1108,12 +1053,10 @@ function dropMenuHelper( event)  {  return '<i class="material-icons md-36" id="
   <span class="slider round"></span>
 </label>
 
-
 </div> 
 
-
-<!--<a href="#" style="color:white;float:right;margin-right:400px;line-height:400%;">UX Best Practices</a>-->
-<!--MAIN DROP MENU--><ul id="jsddm" style="position:absolute;left:520px;top:26px;z-index:300;">
+<!--MAIN DROP MENU-->
+<ul id="jsddm" style="position:absolute;left:520px;top:26px;z-index:300;">
     <li ><a href="#">About XD</a>
         <ul>
             <li><a href="#">User Focus</a></li>
@@ -1170,34 +1113,6 @@ function dropMenuHelper( event)  {  return '<i class="material-icons md-36" id="
 </div> 
 
 </body>
-
-<!--this is the old code that uses templates rather than a true web component-->
-<!--if ($(draggable).attr('id') == "buttonicon") 
-{
-olddropbutton = droptarget;    
-var temp = document.getElementsByTagName("template")[2];
-var clon = temp.content.cloneNode(true);
-$(droptarget).append(clon);
-$('.fedexbutton').draggable( {
-	containment: "window",   
-	cursor: 'move',
-	revert: false
-});
-}  
-
-if ($(draggable).attr('id') == "chance" && olddropbutton != droptarget) 
-{ 
-$(draggable).remove();  
-var temp = document.getElementsByTagName("template")[2];
-var clon = temp.content.cloneNode(true);
-$(droptarget).append(clon);
-$('.fedexbutton').draggable( {
-	containment: "window",   
-	cursor: 'move',
-	revert: false
-});
-olddropbutton = droptarget;
-}-->
 </html>
 
 
