@@ -143,7 +143,7 @@ ul {margin:0px;}
 <textarea  class="fxtextareaclass" onclick="$(this).focus();" style="position:relative;">Enter text here</textarea>
 </template>
 
-<!------------------------------------------==FEDEX CECKBOX COMPONENT--------------------------------->
+<!-------------------------------------------FEDEX CECKBOX COMPONENT--------------------------------->
 <template id="fedexcheckbox">
 <style>
 .fxcheckboxclass	{
@@ -160,6 +160,24 @@ font-family:roboto;
 <input type="checkbox" class="fedexcheckbox" id="yes">
 <label for="yes"> Enter text here.</label>
 </form>
+</template>
+
+<!---------------------------------------------------------FEDEX RADIO BUTTON COMPONENT----------------------->
+<template id="fedexradiobutton">
+<style>
+.fxradiobuttonclass{
+height:75px;
+width:300px;
+position:relative;
+z-index:250;
+font-size:22px;
+font-family:roboto;
+	}
+</style>
+
+<form class="fxradiobuttonclass" onclick="$(this).focus();" style="position:relative;">
+<input type="radio" class="fedexRadio" id="rad" name="Enter Here" value="Enter Here" checked> Enter Here<br>
+</form> 
 </template>
 
 <!--Note: the variable for each constructor must be unique...as in tmplbutton or tmplheader-->
@@ -217,6 +235,16 @@ customElements.define('fedex-checkbox', class extends HTMLElement {
 	}
 });
 
+//fxradiobuttonclass
+let tmplradiobutton = document.querySelector('#fedexradiobutton');
+customElements.define('fedex-radiobutton', class extends HTMLElement {
+    constructor() {
+      super();  
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmplradiobutton.content.cloneNode(true));
+	}
+});
+
 </script>
 
 <!------------------------------------------------------CSS------------------------------------------->
@@ -253,8 +281,6 @@ html, body {
   max-width: device-width;
 	}
 
-
-	
 .fxDiv {
 	width:50%;
 	height:60%;
@@ -267,17 +293,6 @@ html, body {
 
 .ui-menu { width: 150px; }
 
-
-	
-.fedexRadioForm{
-height:75px;
-width:300px;
-position:relative;
-z-index:250;
-font-size:22px;
-font-family:roboto;
-	}
-	
 .fedexTable {
 	font-weight: normal; 
 	position:relative;
@@ -706,7 +721,7 @@ $(".fxcardclass").draggable( {
 } <!--end if-->
 if ($(draggable).attr('id') == "fxcardid" && olddropbutton != droptarget) 
 { 
-$(".fxcardclass").remove();
+$(ui.draggable).remove();
 //alert($(droptarget).attr('id'));  
 $(droptarget).append('<fedex-card id="fxcardid" class="fxcardclass"></fedex-card>');
  
@@ -732,7 +747,7 @@ $(".fxheaderclass").draggable( {
 } <!--end if-->
 if ($(draggable).attr('id') == "fxheaderid" && olddropbutton != droptarget) 
 { 
-$(".fxheaderclass").remove();
+$(ui.draggable).remove();
 //alert($(droptarget).attr('id'));  
 $(droptarget).append('<fedex-header id="fxheaderid" class="fxheaderclass"><span class="world" slot="element-name">FedEx Worldwide</span><img slot="header-image" src="ground.jpg" style="width:100px;height:80px;margin:10px;"/></fedex-header>');
  
@@ -758,7 +773,7 @@ $(".fxbuttonclass").draggable( {
 } <!--end if-->
 if ($(draggable).attr('id') == "fxbuttonid" && olddropbutton != droptarget) 
 { 
-$(".fxbuttonclass").remove();
+$(ui.draggable).remove();
 //alert($(droptarget).attr('id'));  
 $(droptarget).append('<fedex-button id="fxbuttonid" class="fxbuttonclass"></fedex-button>');
  
@@ -784,7 +799,8 @@ $(".fxtextareaclass").draggable( {
 } <!--end if-->
 if ($(draggable).attr('id') == "fxtextareaid" && olddropbutton != droptarget) 
 { 
-$(".fxtextareaclass").remove();
+
+$(ui.draggable).remove();  //u.draggle returns the object being dragged and allows multiple objects of same class to be dragged and not removed
 //alert($(droptarget).attr('id'));  
 $(droptarget).append('<fedex-textarea id="fxtextareaid" class="fxtextareaclass"></fedex-textarea>');
  
@@ -852,7 +868,7 @@ $(".fxcheckboxclass").draggable( {
 } <!--end if-->
 if ($(draggable).attr('id') == "fxcheckboxid" && olddropbutton != droptarget) 
 { 
-$(".fxcheckboxclass").remove();
+$(ui.draggable).remove();
 //alert($(droptarget).attr('id'));  
 $(droptarget).append('<fedex-checkbox id="fxcheckboxid" class="fxcheckboxclass"></fedex-checkbox>');
  
@@ -864,33 +880,30 @@ $(".fxcheckboxclass").draggable( {
 olddropbutton = droptarget;
 }<!--end if-->
 
-<!---------------------------------------------------------HTML RADIO BUTTON (NEW) 5------>
-if ($(draggable).attr('id') == "radioIcon") 
-{
-olddropbutton = droptarget;    
-var temp = document.getElementsByTagName("template")[5];
-var clon = temp.content.cloneNode(true);
-$(droptarget).append(clon);
-$('.fedexRadioForm').draggable( {
-	containment: "window",   
-	cursor: 'move',
-	cancel: null  
-});
-}  
-if ($(draggable).attr('id') == "fedexRadioFormId" && olddropbutton != droptarget) 
-{ 
-$(draggable).remove();  
-var temp = document.getElementsByTagName("template")[5];
-var clon = temp.content.cloneNode(true);
-$(droptarget).append(clon);
-$('.fedexRadioForm').draggable( {
-	containment: "window",   
-	cursor: 'move',
-cancel: null  
-});
-  
+<!---------------------------------------------------------FEDEX RADIO BUTTON COMPONENT--------------------->
+if ($(draggable).attr('id') == "radioicon") { 
 olddropbutton = droptarget;
-}  
+$(droptarget).append('<fedex-radiobutton id="fxradiobuttonid" class="fxradiobuttonclass"></fedex-radiobutton>');
+$(".fxradiobuttonclass").resizable();
+$(".fxradiobuttonclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+ 
+} <!--end if-->
+if ($(draggable).attr('id') == "fxradiobuttonid" && olddropbutton != droptarget) 
+{ 
+$(ui.draggable).remove();
+//alert($(droptarget).attr('id'));  
+$(droptarget).append('<fedex-radiobutton id="fxradiobuttonid" class="fxradiobuttonclass"></fedex-radiobutton>');
+ 
+$(".fxradiobuttonclass").resizable();
+$(".fxradiobuttonclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+olddropbutton = droptarget;
+}<!--end if-->
 
 <!------------------------------------------------------------HTML Paragraph (NEW) 6-->
  if ($(draggable).attr('id') == "paragraphicon") { 
@@ -1023,9 +1036,9 @@ function SquareCardHelper( event)  {  return '<i class="material-icons md-36" id
 function textAreaHelper( event)  {  return '<i class="material-icons md-36" id="textareaicon">keyboard</i><BR>';}
 function paragraphHelper( event)  {  return '<i class="material-icons md-36" id="divicon">format_align_left</i><BR>';}
 function checkboxHelper( event)  {  return '<i class="material-icons md-36" id="checkboxicon">check_box</i><BR>';}
-function radioHelper( event)  {  return '<i class="material-icons md-36" id="radioIcon">radio_button_checked</i><BR>';}
-function tableHelper( event)  {  return '<i class="material-icons md-36" id="tableIcon">border_all</i><BR>';}
-function dropMenuHelper( event)  {  return '<i class="material-icons md-36" id="dropMenuIcon">menu</i><BR>';}
+function radioHelper( event)  {  return '<i class="material-icons md-36" id="radioicon">radio_button_checked</i><BR>';}
+function tableHelper( event)  {  return '<i class="material-icons md-36" id="tableicon">border_all</i><BR>';}
+function dropMenuHelper( event)  {  return '<i class="material-icons md-36" id="dropMenuicon">menu</i><BR>';}
 //var x = $(".mainheader").offset();
          //alert("Top: " + x.top + " Left: " + x.left); //this works
 </script>
@@ -1087,9 +1100,9 @@ function dropMenuHelper( event)  {  return '<i class="material-icons md-36" id="
 	<i class="material-icons md-18 md-light" id="textareaicon">keyboard</i><br /><span style="color:white;font-size:12px;">Text Area</span><BR>
 	<i class="material-icons md-18 md-light" id="paragraphicon">format_align_left</i><br /><span style="color:white;font-size:12px;">Paragraph</span><BR> 		
 	<i class="material-icons md-18 md-light" id="checkboxicon">check_box</i><br /><span style="color:white;font-size:12px;">Check Box</span><BR>	
-	<i class="material-icons md-18 md-light" id="radioIcon">radio_button_checked</i><br /><span style="color:white;font-size:12px;">Radio</span><BR> 
-	<i class="material-icons md-18 md-light" id="tableIcon">border_all</i><br /><span style="color:white;font-size:12px;">Table</span><BR>
-	<i class="material-icons md-18 md-light" id="dropMenuIcon">menu</i><br /><span style="color:white;font-size:12px;">Drop Menu</span><BR>
+	<i class="material-icons md-18 md-light" id="radioicon">radio_button_checked</i><br /><span style="color:white;font-size:12px;">Radio</span><BR> 
+	<i class="material-icons md-18 md-light" id="tableicon">border_all</i><br /><span style="color:white;font-size:12px;">Table</span><BR>
+	<i class="material-icons md-18 md-light" id="dropMenuicon">menu</i><br /><span style="color:white;font-size:12px;">Drop Menu</span><BR>
 	<i class="material-icons md-18 md-light" id="paragraphicon">present_to_all</i><br /><span style="color:white;font-size:12px;">Form</span><BR>
 	<i class="material-icons md-18 md-light" id="paragraphicon">link</i><br /><span style="color:white;font-size:12px;">Link</span><BR> 
 	<!--<i class="material-icons md-36" id="slidericon">keyboard</i><BR>-->
@@ -1116,13 +1129,6 @@ function dropMenuHelper( event)  {  return '<i class="material-icons md-36" id="
 
 <!--TEMPLATES-->
  
-<!--html radio button 5-->
-<template>
-<form class="fedexRadioForm" id="fedexRadioFormId" onclick="$(this).focus();" style="position:relative;">
-<input type="radio" class="fedexRadio" id="rad" name="Enter Here" value="Enter Here" checked> Enter Here<br>
-</form> 
-</template>
-
 <!--html paragraph 6-->
 <template>
 <p class="item_content" id="mary" contenteditable="true">Enter text</p>
