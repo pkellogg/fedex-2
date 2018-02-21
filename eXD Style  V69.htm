@@ -1202,8 +1202,8 @@ function navlistHelper( event)  {  return '<i class="material-icons md-36" id="n
 <body  > <!--BEGIN BODY-->
 <!--HEADER & MAIN MENU BAR-->
 <div style="background-color:rgb(77,20,140);height:60px;">
-<i  class="material-icons md-36 fedexorange" onclick = "toggleDisplay('iconMenu');" style="position:absolute;top:18px;left:18px;">view_headline</i> 
-<i  class="material-icons md-36 fedexorange" onclick = "toggleDisplay('propertysheet');" style="position:absolute;top:18px;right:25px;">view_headline</i> 
+<i  class="material-icons md-36 fedexorange" onclick = "toggleDisplay('iconMenu');" style="position:absolute;top:18px;left:8px;">view_headline</i> 
+<i  class="material-icons md-36 fedexorange" onclick = "toggleDisplay('tabs');" style="position:absolute;top:18px;right:25px;">view_headline</i> 
 <i class="material-icons md-24 fedexorange" id="hidegrid" onclick = "$('#stuff8').toggleClass('tom');$('#stuff9').toggleClass('tom');$('#stuff10').toggleClass('tom');$('#stuff').toggleClass('tom');$('#stuff2').toggleClass('tom');$('#stuff3').toggleClass('tom');$('#stuff4').toggleClass('tom');$('#stuff5').toggleClass('tom');$('#stuff6').toggleClass('tom');$('#stuff7').toggleClass('tom');" style="position:absolute;top:24px;right:75px;">grid_on</i>
 <span style="color:white;font-family:arial;font-size:32px;font-weight:bold;padding-left:130px;line-height:2.0;">Fed<span style="color:rgb(255,102,0);font-family:arial;font-size:32px;font-weight:bold;line-height:1.8;">Ex</span></span>
 <span style="color:rgb(153,153,153);font-family:arial;font-size:20px;font-weight:normal;padding-left:20px;line-height:2.0;">Enterprise XD</span>
@@ -1238,22 +1238,23 @@ function navlistHelper( event)  {  return '<i class="material-icons md-36" id="n
     <li><a href="#">XD Services</a></li>
 </ul>
 </div> 
+ 
 <!--LEFT ICON MENU-->    <!--href="" data-geo="-->
-<div id="iconMenu" style="position:absolute;left:0px;top:60px;background-color:rgb(80,80,80);width:80px;height:100%;text-align:center;z-index:1000;"><br />
-	<a><i class="material-icons md-18 md-light" id="headericon">title</i></a><br /><span style="color:white;font-size:12px;">Header</span><BR>
-	<i class="material-icons md-18 md-light" id="switchicon">blur_circular</i><br /><span style="color:white;font-size:12px;">FAB</span><BR>
-	<i class="material-icons md-18 md-light" id="buttonicon">input</i><br /><span style="color:white;font-size:12px;">Button</span><BR>
-	<i class="material-icons md-18 md-light" id="squarecardicon">picture_in_picture</i><br /><span style="color:white;font-size:12px;">Card</span><BR>
-	<i class="material-icons md-18 md-light" id="textareaicon">keyboard</i><br /><span style="color:white;font-size:12px;">Text Area</span><BR>
-	<i class="material-icons md-18 md-light" id="paragraphicon">format_align_left</i><br /><span style="color:white;font-size:12px;">Paragraph</span><BR> 		
-	<i class="material-icons md-18 md-light" id="checkboxicon">check_box</i><br /><span style="color:white;font-size:12px;">Check Box</span><BR>	
-	<i class="material-icons md-18 md-light" id="radioicon">radio_button_checked</i><br /><span style="color:white;font-size:12px;">Radio</span><BR> 
-	<i class="material-icons md-18 md-light" id="tableicon">border_all</i><br /><span style="color:white;font-size:12px;">Table</span><BR>
-	<i class="material-icons md-18 md-light" id="dropmenuicon">menu</i><br /><span style="color:white;font-size:12px;">Drop Menu</span><BR>
-	<i class="material-icons md-18 md-light" id="navlisticon">chrome_reader_mode</i><br /><span style="color:white;font-size:12px;">Boxed Menu</span><BR>
+<div id="iconMenu" style="position:absolute;left:0px;top:60px;background-color:rgb(80,80,80);width:50px;height:65%;text-align:center;z-index:1000;"><br />
+	<a href="" data-geo=""><i class="material-icons md-18 md-light" id="headericon">title</i></a><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="switchicon">blur_circular</i><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="buttonicon">input</i><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="squarecardicon">picture_in_picture</i><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="textareaicon">keyboard</i><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="paragraphicon">format_align_left</i><br /><span style="color:white;font-size:12px;"></span><BR> 		
+	<i class="material-icons md-18 md-light" id="checkboxicon">check_box</i><br /><span style="color:white;font-size:12px;"></span><BR>	
+	<i class="material-icons md-18 md-light" id="radioicon">radio_button_checked</i><br /><span style="color:white;font-size:12px;"></span><BR> 
+	<i class="material-icons md-18 md-light" id="tableicon">border_all</i><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="dropmenuicon">menu</i><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="navlisticon">chrome_reader_mode</i><br /><span style="color:white;font-size:12px;"></span><BR>
 	<!--<i class="material-icons md-18 md-light" id="paragraphicon">link</i><br /><span style="color:white;font-size:12px;">Link</span><BR>--> 
 	<!--<i class="material-icons md-36" id="slidericon">keyboard</i><BR>-->
-	<span id="display" style="padding-left:10px;color:black;font-size:14px;"></span>
+	<span id="display" style="padding-left:10px;color:black;font-size:14px;visibility:hidden;"></span><!--you can't get rid of this, its needed as a key-->
 </div>
 
 <!--yy is a global that is set when a user double clicks an object...which displays the id of the selected object
@@ -1272,42 +1273,31 @@ $( function() {
   } );
 </script>
 
-
-
 <!--RIGHT PROPERTY SHEET-->    <!--href="" data-geo="-->
-<div id="propertysheet" style="position:absolute;right:0px;top:60px;background-color:rgb(90,90,90);width:300px;height:60%;text-align:center;z-index:1000;"><br />
-
-<div id="tabs" style="color:white;background-color:rgb(90,90,90);border:none;margin:0px;padding:0px;">
-  <ul  style="color:white;background-color:rgb(90,90,90);border-bottom:solid, silver, thin;border-top:none;border-left:none;border-right:none;">
+<div id="tabs" style="color:white;border:none;margin:0px;padding:0px;position:absolute;right:0px;top:60px;z-index:2000;">
+  <ul  style="color:white;border-top:none;border-left:none;border-right:none;background-color:rgb(90,90,90);">
     <li style="border:none;"><a href="#tabs-1" style="background-color:rgb(120,120,120);font-size:14px;color:white;">Properties</a></li>
     <li style="border:none;"><a href="#tabs-2" style="background-color:rgb(120,120,120);font-size:14px;color:white;">History</a></li>
     <li style="border:none;"><a href="#tabs-3" style="background-color:rgb(120,120,120);font-size:14px;color:white;">Settings</a></li>
   </ul>
-<div id="tabs-1" style="background-color:rgb(90,90,90);margin:0px;padding:0px;">
-<div style="background-color:rgb(90,90,90);position:absolute;top:60px;margin:0px;">
+
+<div id="tabs-1" style="margin:0px;padding:0px;">
+<div style="background-color:rgb(90,90,90);position:absolute;top:38px;margin:0px;">
 
 <ul style="text-decoration:none;list-style-type: none;margin:0px;padding:0px;"> 
-<li id="demo" style="background-color:rgb(120,120,120);width:300px;color:white;height:25px;margin-bottom:5px;text-align:left;padding-left:20px;"></li>
-<li  style="background-color:rgb(120,120,120);width:300px;color:white;height:25px;margin-bottom:5px;text-align:left;"><input type="file" id="jim" style="font-size:10px;height:22px;" /></li>
-<li id="demo" style="background-color:rgb(120,120,120);width:300px;color:white;height:25px;margin-bottom:5px;text-align:left;"><input type="button" value="Set Header Slot" onclick="document.getElementById('headerslot').innerHTML = 'FedEx Services'" style="font-size:10px;height:22px;"></button> 
+<li style="text-align:left;padding-left:10px;background-color:rgb(120,120,120);width:260px;color:white;height:35px;margin-bottom:2px;text-align:left;"><i class="material-icons md-18 md-light" id="deleteicon" style="padding-top:6px;" onclick = "$( '#' + yy ).remove();document.getElementById('demo').innerHTML = 'No Object Selected';">delete</i><div id="demo" style="font-size:12px;padding-left:10px;line-height:25px;display:inline;margin-bottom:5px;">No Object Selected</div></li>  
+<li id="demo" style="background-color:rgb(120,120,120);width:260px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;"><button  onclick="document.getElementById('headerslot').innerHTML = 'FedEx Services'" style="font-size:12px;height:22px;background-color:transparent;color:white;border:none;">Add Title</button><button  onclick="$('#headerimage').attr('src','squarecard_image.jpg');" style="margin-left:10px;font-size:12px;height:22px;background-color:transparent;color:white;border:none;padding-top:6px;">Add Image</button> 
 </li>
-<li id="demo" style="background-color:rgb(120,120,120);width:300px;color:white;height:25px;margin-bottom:5px;"></li>
-<li id="demo" style="background-color:rgb(120,120,120);width:300px;color:white;height:25px;margin-bottom:5px;"></li>
-<li id="demo" style="background-color:rgb(120,120,120);width:300px;color:white;height:25px;margin-bottom:5px;"></li>
+<li style="background-color:rgb(120,120,120);width:260px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;"><input type="file" id="jim" style="font-size:12px;height:22px;" /></li>
+<li style="background-color:rgb(120,120,120);width:260px;color:white;height:35px;margin-bottom:2px;"></li>
+<li style="background-color:rgb(120,120,120);width:260px;color:white;height:35px;margin-bottom:2px;"></li>
+<li style="background-color:rgb(120,120,120);width:260px;color:white;height:35px;margin-bottom:0px;"></li>
+</li>
 </ul> 
- 
-
-
-	 
-
-<input type="button" value="Set Header Image" onclick="$('#headerimage').attr('src','squarecard_image.jpg');" style="position:absolute;top:140px;left:30px;font-size:12px;"></button>
-<input type="button" value="Delete" onclick = "$( '#' + yy ).remove();" style="position:absolute;top:180px;left:30px;font-size:12px;"></button> 
-
-<input type="file" id="jim" style="position:absolute;top:240px;left:30px;font-size:12px;" />
-<form action="" style="position:absolute;top:280px;left:30px;color:white;font-size:12px;">
+ <!--<form action="" style="position:absolute;top:280px;left:30px;color:white;font-size:12px;">
 <input type="text" name="headertitleslot" value="Enter Title" style="color:gray;"><br>
 <input type="submit" value="Submit">
-</form>  
+</form>--> 
 </div>
 </div>
 
@@ -1315,13 +1305,11 @@ $( function() {
 <p>Tab 2 content</p>
 </div>
   
-<div id="tabs-3" style="color:white;background-color:rgb(90,90,90);">
+<div id="tabs-3" style="color:white;background-color:rgb(90,90,90);font-family:roboto;">
 Tab 3 Content
 </div>
-</div>
-</div>
-
 </div><!--property sheet-->
+
 
 
 <!--MDL GRID-->
@@ -1345,9 +1333,89 @@ Tab 3 Content
  
 <!--jQuery simple context Menu: https://swisnl.github.io/jQuery-contextMenu/demo.html-->
 <!--http://ignitersworld.com/lab/contextMenu.html-->
- 
 
- 
+
+<div style="width: 550px;height:200px;font-family:roboto;position:absolute;left:200px;border: thin solid silver;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+ <style>
+		#canvas .circle {
+			display: inline-block;
+			margin: 1em;
+		}
+		.circles-decimals {
+			font-size: .4em;
+		}
+	</style>
+<div id="canvas">
+		<div class="circle" id="circles-1"></div> 
+		<div class="circle" id="circles-2"></div> 
+		<div class="circle" id="circles-3"></div> 
+		 <div class="circle" id="circles-4"></div> 
+		<div class="circle" id="circles-5"></div>
+		  
+		<button id="add_button" style="position:absolute;bottom:0px;right:0px;">+</button>
+		<button id="substract_button" style="position:absolute;bottom:0px;right:30px;"">-</button>
+		 <!--<button id="add_width_button">Width +10</button>
+		<button id="substract_width_button">Width -10</button>
+		<button id="colors_button">Swap colors</button>-->
+<img src="person1.png" style="height:50px;width:50px;position:absolute;left:25px;bottom:50px;"></image>
+<img src="person1.png" style="height:50px;width:50px;position:absolute;left:140px;bottom:50px;"></image>	
+<img src="person1.png" style="height:50px;width:50px;position:absolute;left:255px;bottom:50px;"></image>	
+<img src="person1.png" style="height:50px;width:50px;position:absolute;left:370px;bottom:50px;"></image>	
+<img src="person1.png" style="height:50px;width:50px;position:absolute;left:485px;bottom:50px;"></image>
+ 			
+	</div>
+	
+	
+<!--https://github.com/lugolabs/circles-->
+	<script src="circles.min.js"></script>
+	<script>
+		//@ http://jsfromhell.com/array/shuffle [v1.0]
+		function shuffle(o){ //v1.0
+			for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+			return o;
+		}
+		var colors = [
+			['#D3B6C6', '#4B253A'], ['#FCE6A4', '#EFB917'], ['#BEE3F7', '#45AEEA'], ['#F8F9B6', '#D2D558'], ['#F4BCBF', '#D43A43']
+		], circles = [];
+		for (var i = 1; i <= 5; i++) {
+			var child = document.getElementById('circles-' + i),
+				percentage = 31.42 + (i * 9.84);
+			circles.push(Circles.create({
+				id:         child.id,
+				value:		percentage,
+				radius:     35,
+				width:      5,
+				colors:     colors[i - 1]
+			}));
+		}
+		document.getElementById('add_button').onclick = function()
+		{
+		    for(var i = 0, l = circles.length; i < l; i++)
+				circles[i].update(circles[i]._value + 10, 250);
+		};
+		document.getElementById('substract_button').onclick = function()
+		{
+			for(var i = 0, l = circles.length; i < l; i++)
+				circles[i].update(circles[i]._value - 10, 250);
+		};
+		document.getElementById('add_width_button').onclick = function()
+		{
+			for(var i = 0, l = circles.length; i < l; i++)
+				circles[i].updateWidth(circles[i]._strokeWidth + 10);
+		};
+		document.getElementById('substract_width_button').onclick = function()
+		{
+			for(var i = 0, l = circles.length; i < l; i++)
+				circles[i].updateWidth(circles[i]._strokeWidth - 10);
+		};
+		document.getElementById('colors_button').onclick = function()
+		{
+			colors = shuffle(colors);
+			for(var i = 0, l = circles.length; i < l; i++)
+				circles[i].updateColors(colors[i]);
+		};
+	</script>
+</div> 
 </body>
 </html>
 
