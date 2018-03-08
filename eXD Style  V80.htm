@@ -29,6 +29,10 @@
 <!--web components polyfill works with ie 11-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.1.0/webcomponents-lite.js"></script>
 
+<!--script for header component-->
+<script defer src="main.js"></script>
+
+
 <!--MDL was commented out because it made everyting very slow-->  
 <!--google material lite    https://getmdl.io/started/index.html#download-->
 <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -733,12 +737,12 @@ function drawBasic() {
 //fedexheader (in this iteration (v79 fedexheader is now a custom element rather than component
 //when first created on drop it picks up width as 800px from append code...thereafter it just gets the value from the reize boxses entered by the euser.
 
-var tmplheader = document.querySelector('#fedexheader');
+/*var tmplheader = document.querySelector('#fedexheader');
 
 
 class fxheader extends HTMLElement { 
 
-static get observedAttributes() { return ["w", "h"]; }  //width and height
+static get observedAttributes() { return ["w", "1"]; }   
 
 constructor() {
 super();  
@@ -746,11 +750,16 @@ super();
 var shadow = this.attachShadow({mode: 'open'});
 //shadowRoot.appendChild(tmplheader.content.cloneNode(true));
 var div = document.createElement('div');
-div.setAttribute("style", "width:300px;height:300px;background-color:red;");
+var style = document.createElement('style');
+
+ 
+
+shadow.appendChild(style);
 shadow.appendChild(div); //MUST BE INSIDE CONSTRUCTOR
 }
 	
 connectedCallback() {
+updateStyle(this);
 }
 
 disconnectedCallback() {
@@ -762,29 +771,36 @@ adoptedCallback() {
 }
 
 attributeChangedCallback(name, oldValue, newValue) {
-    // name will always be "width" due to observedAttributes
-    this._width = newValue;
-    //this._updateRendering();
+  //alert(name + " " + oldValue + " " + newValue);  
+  
   }
   
-get width() {
-    return this._width;
-  }
-  
-set width(v) {
-    this.setAttribute("width", v);
-  }
 
-_updateRendering() {
-   var str2 = this._width;
-   this.innerHTML =  "<" + "div id='fxheaderid' class='fxheaderclass' style='height:100px;width:" + str2 + "'" + "><img id='headerimage'  src='ground.jpg' style='width:140px;height:100px;' /><span id='headerslot' contenteditable='true' onclick='$(this).focus();' style='color:white;margin-left:50px;'>Enter Title Text</span></div>";
-  }
-  
 
 };
 
 //Final step: Define the new element.  This is the CustomElementRegistry.define() method.
 customElements.define('fedex-header', fxheader);
+
+function updateStyle(elem) {
+//alert(elem);
+  var shadow = elem.shadowRoot;
+  var childNodes = shadow.childNodes;
+  for(var i = 0; i < childNodes.length; i++) {
+    if(childNodes[i].nodeName === 'STYLE') {
+      childNodes[i].textContent = 'div {' +
+                          ' width: ' + elem.getAttribute('l') + 'px;' +
+                          ' height: ' + elem.getAttribute('l') + 'px;' +
+                          ' background-color: ' + elem.getAttribute('c');
+    }
+  }
+}*/
+
+
+
+
+
+
 
 
 //fedexbutton 
@@ -1365,21 +1381,28 @@ olddropbutton = droptarget;
 <!------------------------------------------------------FEDEX HEADER---------------------------->
 if ($(draggable).attr('id') == "headericon") { 
 olddropbutton = droptarget;
-$(droptarget).append('<fedex-header  width="500px" ondblclick="myFunction(fxheaderid)"></fedex-header>');
+$(droptarget).append(square);
+
+//$(droptarget).append('<fedex-header  width="500px" ondblclick="myFunction(fxheaderid)"></fedex-header>');
 $(".fxheaderclass").draggable( {
 	containment: "window",   
 	cursor: 'move'  
 });
- 
+
+
+
+//square = document.createElement('custom-square');
+//square.setAttribute('l','150');   //hook up setAttribute commands to the design system property box.
+//square.setAttribute('c','purple');
+//document.body.appendChild(square);
+
 } <!--end if-->
 if ($(draggable).attr('id') == "fxheaderid" && olddropbutton != droptarget) 
 { 
+ 
 $(ui.draggable).remove();
-$(droptarget).append('<fedex-header   width="500px;" ondblclick="myFunction(fxheaderid)"></fedex-header>');
-$(".fxheaderclass").draggable( {
-	containment: "window",   
-	cursor: 'move'  
-});
+$(droptarget).append(square);
+
 olddropbutton = droptarget;
 }<!--end if-->
 
@@ -1803,10 +1826,22 @@ Tab 3 Content
   
 <!--jQuery simple context Menu: https://swisnl.github.io/jQuery-contextMenu/demo.html-->
 <!--http://ignitersworld.com/lab/contextMenu.html-->
-
+ 
 </div> 
 
-<fedex-header></fedex-header>
+<!--<fedex-header style="background-color:tan;"></fedex-header>-->
+<!--<script> 
+  
+  
+  fxheader = document.createElement('fedex-header');
+  fxheader.setAttribute('i','100');  //this sets an attribute for the shadow root, the fedex-header element
+  fxheader.setAttribute('c','red');
+  document.body.appendChild(fxheader);
+   
+  </script>-->
+ 
+
+ 
 
 <!--<script>
 function patFunction(tt) {
@@ -1820,7 +1855,64 @@ function patFunction(tt) {
 </script> 
 <button onclick="patFunction()">Try it</button>
 <p id="demo"></p>--> 
+<script>
+// Create a class for the element
+class Square extends HTMLElement {
+  // Specify observed attributes so that
+  // attributeChangedCallback will work
+  static get observedAttributes() {return ['w', 'width', 'height']; }
 
+  constructor() {
+    // Always call super first in constructor
+    super();
+
+    var shadow = this.attachShadow({mode: 'open'});
+//you can create a complex component by adding in many different elements.
+    var div = document.createElement('div'); //div is the square and is built in the update function
+    var style = document.createElement('style'); //need a style node in the update function to build the inline style
+    shadow.appendChild(style);
+    shadow.appendChild(div);
+  }
+
+  connectedCallback() {
+    console.log('Custom square element added to page.');
+    updateStyle(this);
+  }
+
+   attributeChangedCallback(name, oldValue, newValue) {
+    console.log('Custom square element attributes changed.');
+    updateStyle(this);
+  }
+}
+
+customElements.define('custom-square', Square);
+
+//this builds the element on the page as a series of dom nodes
+function updateStyle(elem) {
+  var shadow = elem.shadowRoot;
+  var childNodes = shadow.childNodes;
+  for(var i = 0; i < childNodes.length; i++) {
+    if(childNodes[i].nodeName === 'STYLE') {   //building the inline element style
+      childNodes[i].textContent = 'div {' +
+                          ' width: ' + elem.getAttribute('width') + 'px;' +    //attributes defined on add or radom buttons
+                          ' height: ' + elem.getAttribute('height') + 'px;' +
+                          ' background-color: ' + elem.getAttribute('c');
+    }
+  }
+}
+
+ // Create a custom square element
+   square = document.createElement('custom-square');
+   square.setAttribute('width','250');   //hook up setAttribute commands to the design system property box.
+   square.setAttribute('height','100');
+   square.setAttribute('c','tan');
+   square.setAttribute('id',"fxheaderid");
+   square.setAttribute('class',"fxheaderclass");
+  //document.body.appendChild(square);
+</script>
+   
+
+ 
 </body>
 </html>
 
