@@ -1293,7 +1293,7 @@ olddropbutton = droptarget;
 <!------------------------------------------------------FEDEX HEADER---------------------------->
 if ($(draggable).attr('id') == "headericon") { 
 olddropbutton = droptarget;
-$(droptarget).append('<fedex-header  id="fxheaderid" class="fxheaderclass" ondblclick="myFunction(fxheaderid)"><img id="headerimage" slot="header-image" src="ground.jpg" style="width:120px;height:80px;" /><span id="headerslot" slot="element-name" style="color:white;margin-left:50px;">Enter Title Text</span><span style="color:white;margin-left:30px;color:silver;">This is custom text the user can specify.</span><button type="button" style="line-height:2;color:white;font-size:16px;height:40px;width:140px;background-color:transparent;float:right;margin-right:20px;margin-top:20px;">Explore FedEx</button></fedex-header>');
+$(droptarget).append('<fedex-header  id="fxheaderid" class="fxheaderclass" ondblclick="myFunction(fxheaderid)"><img id="headerimage" slot="header-image" src="squarecard_image.jpg" style="width:120px;height:80px;" /><span id="headerslot" slot="element-name" style="color:white;margin-left:50px;">Enter Title Text</span><span style="color:white;margin-left:30px;color:silver;">Welcome to FedEx World Wide</span><button type="button" style="line-height:2;color:white;font-size:16px;height:40px;width:140px;background-color:transparent;float:right;margin-right:20px;margin-top:20px;">Explore FedEx</button></fedex-header>');
 $(".fxheaderclass").draggable( {
 	containment: "window",   
 	cursor: 'move'  
@@ -1303,7 +1303,7 @@ $(".fxheaderclass").draggable( {
 if ($(draggable).attr('id') == "fxheaderid" && olddropbutton != droptarget) 
 { 
 document.getElementById('fxheaderid').remove();
-$(droptarget).append('<fedex-header  id="fxheaderid" class="fxheaderclass" ondblclick="myFunction(fxheaderid)"><img id="headerimage" slot="header-image" src="ground.jpg" style="width:120px;height:80px;" /><span id="headerslot" slot="element-name" style="color:white;margin-left:50px;">Enter Title Text</span><span style="color:white;margin-left:30px;color:silver;">This is custom text the user can specify.</span></fedex-header>');
+$(droptarget).append('<fedex-header  id="fxheaderid" class="fxheaderclass" ondblclick="myFunction(fxheaderid)"><img id="headerimage" slot="header-image" src="squarecard_image.jpg" style="width:120px;height:80px;" /><span id="headerslot" slot="element-name" style="color:white;margin-left:50px;">Enter Title Text</span><span style="color:white;margin-left:30px;color:silver;">Welcome to FedEx World Wide</span></fedex-header>');
 $(".fxheaderclass").draggable( {
 	containment: "window",   
 	cursor: 'move'  
@@ -1857,7 +1857,7 @@ constructor() {
       shadowRoot.appendChild(style);
 } //constructor
 	  
-connectedCallback() {updateStyle(this);}
+connectedCallback() {updateStyle(this);document.getElementById("btn1").click();}  //clicks the property dialog ok button to refresh the new copy of the element in drag and drop
 
 attributeChangedCallback(name, oldValue, newValue) {updateStyle(this);}
 })
@@ -1875,6 +1875,8 @@ function updateStyle(elem) {
 						  
     }
   }
+   
+ 
 }//updateStyle
 </script>
  
