@@ -1,0 +1,1904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>FedEx XD Web Component IDE</title>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--google material  to render corrrectly in mobile-->
+   
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--color picker see: https://bgrins.github.io/spectrum/#events-change  and   http://jsfiddle.net/bgrins/ctkY3/-->
+  
+<!--javascript-->
+
+<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="material.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+<!--<script src="//storage.googleapis.com/code.getmdl.io/1.0.1/material.min.js"></script>-->
+<!--CSS-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+<link rel="stylesheet" href="material.css"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<!--leaderboard   Circles and Goggle Charts-->
+<script src="circles.min.js"></script> <!--this has to be external of the template-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script><!--this needs to be external-->
+
+<!--color pick dialog-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
+
+
+<!--web components polyfill works with ie 11-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.1.0/webcomponents-lite.js"></script>
+
+<!--script for header component-->
+<!--<script defer src="main.js"></script>-->
+
+
+<!--MDL was commented out because it made everyting very slow-->  
+<!--google material lite    https://getmdl.io/started/index.html#download-->
+<!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.orange-green.min.css">
+<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>-->
+
+<!--NOTE: the style for the component must be included in the template for the component and the componenet
+itself must have a matching class-->
+
+<!-----------------------------------------------PROPERTY SHEET TEMPLATES-------------------------------->
+<template id="headerpropsheet">
+<ul style="text-decoration:none;list-style-type: none;margin:0px;padding:0px;">
+<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;"><span id="selecteditem" style="color:white;padding-left:10px;line-height:3;color:lightgreen;">No Item Selected</span></li> 
+<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;padding-top:5px;"><span style="color:white;padding-left:10px;">W: </span><input type="text" id="setWidth"   value="" style="width:50px;background-color:rgb(70,70,70);color:white;text-align:center;border: thin silver solid;"><span style="color:white;padding-left:10px;">H: </span><input type="text" id="setHeight"   value="" style="width:50px;background-color:rgb(70,70,70);color:white;text-align:center;border: thin silver solid;padding-left:10px;"><button id="btn1"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;" onclick= "pp = $('#setWidth').val();kk = $('#setHeight').val();cc = $('#setBackgroundColor').val();headerStyles(pp,kk,cc);">ok</button><input type='text' id="full"/></li>
+<li id="demo" style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;">Iamge <input type="file" id="jim2"  onchange="$('#headerimage').attr('src',this.files[0].name)" style="font-size:10px;height:26px;" /></li>
+<li id="demo"  style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;"><input type="text" id="setTitle1"   value="Title" style="padding-left:5px;width:260px;background-color:rgb(70,70,70);color:silver;text-align:center;border: thin silver solid;text-align:left;"><button  onclick="document.getElementById('headerslot1').innerHTML = $('#setTitle1').val();"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;">ok</button></li> 
+<li id="demo2" style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;"><input type="text" id="setTitle2"   value="Sub-Title" style="padding-left:5px;width:260px;background-color:rgb(70,70,70);color:silver;text-align:center;border: thin silver solid;text-align:left;"><button  onclick="document.getElementById('headerslot2').innerHTML = $('#setTitle2').val();"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;">ok</button></li>
+<li id="demo3" style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;"><input type="text" id="setTitle3"   value="Button Caption" style="padding-left:5px;width:260px;background-color:rgb(70,70,70);color:silver;text-align:center;border: thin silver solid;text-align:left;"><button  onclick="document.getElementById('headerslot3').innerHTML = $('#setTitle3').val();"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;">ok</button></li> 
+<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;text-align:left;padding-left:10px;padding-top:2px;margin-bottom:2px;"><input type="file" id="jim" onchange="$('#cardimage').attr('src',this.files[0].name)" style="font-size:10px;height:26px;" /></li>
+<li  style="text-align:left;padding-left:10px;background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;"><i class="material-icons md-18 md-light" id="deleteicon" style="padding-top:6px;" onclick = "$( '#' + yy ).remove();document.getElementById('trashcan').innerHTML = 'No Object Selected';document.getElementById('selecteditem').innerHTML = 'No Object Selected' ">delete</i><div id="trashcan" style="font-size:12px;padding-left:10px;line-height:25px;display:inline;margin-bottom:5px;color:white">No Object Selected</div></li>  
+<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:0px;"></li>
+</ul> 
+</div>
+</div>
+</template>
+
+<template id="cardpropsheet">
+
+<ul style="text-decoration:none;list-style-type: none;margin:0px;padding:0px;">
+<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;"><span id="selecteditem" style="color:white;padding-left:10px;line-height:3;color:lightgreen;">No Item Selected</span></li> 
+<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;padding-top:5px;"><span style="color:white;padding-left:10px;">W: </span><input type="text" id="setWidth"   value="" style="width:50px;background-color:rgb(70,70,70);color:white;text-align:center;border: thin silver solid;"><span style="color:white;padding-left:10px;">H: </span><input type="text" id="setHeight"   value="" style="width:50px;background-color:rgb(70,70,70);color:white;text-align:center;border: thin silver solid;padding-left:10px;"><button id="btn1"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;" onclick= "pp = $('#setWidth').val();kk = $('#setHeight').val();cc = $('#setBackgroundColor').val();headerStyles(pp,kk,cc);">ok</button><input type='text' id="full"/></li>
+<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;text-align:left;padding-left:10px;padding-top:2px;margin-bottom:2px;"><input type="file" id="jim" onchange="$('#cardimage').attr('src',this.files[0].name)" style="font-size:10px;height:26px;" /></li>
+<li id="demo"  style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;"><input type="text" id="setItem1"   value="Item" style="padding-left:5px;width:260px;background-color:rgb(70,70,70);color:silver;text-align:center;border: thin silver solid;text-align:left;"><button  onclick="document.getElementById('cardslot1').innerHTML = $('#setItem1').val();"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;">ok</button></li> 
+<li id="demo2" style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;"><input type="text" id="setItem2"   value="Item" style="padding-left:5px;width:260px;background-color:rgb(70,70,70);color:silver;text-align:center;border: thin silver solid;text-align:left;"><button  onclick="document.getElementById('cardslot2').innerHTML = $('#setItem2').val();"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;">ok</button></li>
+<li id="demo3" style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;"><input type="text" id="setItem3"   value="item" style="padding-left:5px;width:260px;background-color:rgb(70,70,70);color:silver;text-align:center;border: thin silver solid;text-align:left;"><button  onclick="document.getElementById('cardslot3').innerHTML = $('#setItem3').val();"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;">ok</button></li> 
+<li  style="text-align:left;padding-left:10px;background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;"><i class="material-icons md-18 md-light" id="deleteicon" style="padding-top:6px;" onclick = "$( '#' + yy ).remove();document.getElementById('trashcan').innerHTML = 'No Object Selected';document.getElementById('selecteditem').innerHTML = 'No Object Selected' ">delete</i><div id="trashcan" style="font-size:12px;padding-left:10px;line-height:25px;display:inline;margin-bottom:5px;color:white">No Object Selected</div></li>  
+<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:0px;"></li>
+</ul> 
+</div>
+</div>
+</template>
+
+
+<!-----------------------------------------------------FEDEX HEADER COMPONENT---------------------------->
+<!------------------------------------------------HEADER---------------------------------------------->
+<template id="fedexheader"> <!--all inside #shadow-dom-->
+
+<link rel="stylesheet" href="headerstyle.css"> 
+
+<header class="fxheaderclass"> <!--never absolute-->
+<link rel="stylesheet" href="headerstyle.css">
+<slot name="header-image"></slot>
+<slot  name="element-name"></slot>
+<slot name="element-name2"></slot> 
+<slot name="button-slot"></slot>
+<slot></slot> 
+</header>
+</template>
+
+<script>
+customElements.define('fedex-header', class extends HTMLElement {   
+static get observedAttributes() {return ['position' , 'width', 'height', 'c' ]; }
+constructor() {
+      super(); 
+	  let shadowRoot = this.attachShadow({mode: 'open'});  
+	  shadowRoot.appendChild(fedexheader.content.cloneNode(true));
+	  var style = document.createElement('style'); 
+      shadowRoot.appendChild(style);
+} //constructor
+	  
+connectedCallback() {updateStyle(this);document.getElementById("btn1").click();}  //clicks the property dialog ok button to refresh the new copy of the element in drag and drop
+
+attributeChangedCallback(name, oldValue, newValue) {updateStyle(this);}
+})
+
+function updateStyle(elem) {
+  var shadow = elem.shadowRoot;
+  var childNodes = shadow.childNodes;
+  for(var i = 0; i < childNodes.length; i++) {
+    if(childNodes[i].nodeName === 'STYLE') {   //building the inline element style
+      childNodes[i].textContent = '.fxheaderclass {' +
+						  'position: ' + elem.getAttribute('position') + ';' + //this order must match observedAttriobutes order
+                          ' width: ' + elem.getAttribute('width') + 'px;' +     
+                          ' height: ' + elem.getAttribute('height') + 'px;' +
+                          ' background-color: ' + elem.getAttribute('c') + ';' + '}' 
+						  
+    }
+  }
+}//updateStyle
+</script>
+<!--this is activated by the ok button in the properties dialog box and is wired for only the header element--> 
+<script>
+function headerStyles(x, y , z) {
+document.getElementsByTagName("fedex-header")[0].setAttribute("c", z);
+document.getElementsByTagName("fedex-header")[0].setAttribute("width", x); 
+document.getElementsByTagName("fedex-header")[0].setAttribute("height", y); 	
+}
+</script> 
+<!-------------------------------------------------------FEDEX BUTTON COMPONENT----------------------------------->
+<!--fedex button-->
+<template id="fedexbutton">
+<style>
+.fxbuttonclass {
+	background-color:var(--fedexpurple);
+	color: var(--fedexwhite);
+	height:30px;
+	width:100px;
+	box-shadow: 0px 5px 5px #888888;
+	font-family:roboto;
+	font-size: 14px;
+	text-align: center;
+	line-height:30px;
+	z-index:100;
+	}
+</style>
+
+<div class="fxbuttonclass" style="position:relative;">Fedex Button</div>
+</template>
+
+<!------------------------------------------------------FEDEX CARD COMPONENT---------------------------->
+<template id="fedexcard">
+<style>
+.fxcardclass {
+	background-color:ivory;
+	color:#b0bec5;
+	height:300px;
+	width:100%;
+	max-width: 300px;
+	box-shadow: 0px 5px 10px #888888;
+	font-family:roboto;
+	font-size: 18px;
+	line-height:60px;
+	}
+	
+img {
+	width: 100%;
+	height:50%;
+	background-color:lightgray;
+	}
+	
+ul {margin:0px;}
+ 
+</style>
+
+<div class="fxcardclass" style="position:relative;">
+<!--<img  onclick="changeImage(this);" />-->
+<slot name="card-image"></slot>
+<ul>
+<li>
+<span class="item_content" contenteditable="true" onclick="$(this).focus();">label 1</span>
+</li>
+<li>
+<span class="item_content" contenteditable="true" onclick="$(this).focus();">label 2</span>
+</li>
+</ul>
+</div>
+</template>
+
+<!----------------------------------------------FEDEX TEXTAREA COMPONENT----------------------------------->
+<template id="fedextextarea">
+<style>
+.fxtextareaclass {
+	height:50%;
+	width:90%;
+	font-size:18px;
+	font-family:roboto;
+	background-color:white;
+	position:relative;
+	}
+</style>
+
+<textarea  class="fxtextareaclass" onclick="$(this).focus();" style="position:relative;">Enter text here</textarea>
+</template>
+
+<!-------------------------------------------FEDEX CECKBOX COMPONENT--------------------------------->
+<template id="fedexcheckbox">
+<style>
+.fxcheckboxclass	{
+height:75px;
+width:300px;
+position:relative;
+z-index:250;
+font-size:22px;
+font-family:roboto;
+	}
+</style>
+
+<form class="fxcheckboxclass" onclick="$(this).focus();" style="position:relative;">
+<input type="checkbox" class="fedexcheckbox" id="yes">
+<label for="yes"> Enter text here.</label>
+</form>
+</template>
+
+<!---------------------------------------------------------FEDEX RADIO BUTTON COMPONENT----------------------->
+<template id="fedexradiobutton">
+<style>
+.fxradiobuttonclass{
+height:75px;
+width:300px;
+position:relative;
+z-index:250;
+font-size:22px;
+font-family:roboto;
+	}
+</style>
+
+<form class="fxradiobuttonclass" onclick="$(this).focus();" style="position:relative;">
+<input type="radio" class="fedexRadio" id="rad" name="Enter Here" value="Enter Here" checked> Enter Here<br>
+</form> 
+</template>
+
+<!----------------------------------------------FEDEX PARAGRAPH COMPONENT---------------------------------->
+<template id="fedexparagraph">
+<style>
+p {	width:400px;
+	font-family:roboto;
+	font-size:18px;
+	}
+</style>
+<p class="item_content" contenteditable="true">Enter text</p>
+</template>
+
+<!----------------------------------------------------FEDEX TABLE COMPONENT------------------------------>
+<template id="fedextable">
+<style>
+.fedexTable {
+	font-weight: normal; 
+	position:relative;
+	z-index:250;
+	font-size:14px;
+	font-family:roboto;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding:5px;
+	border: 1px solid gray;
+}
+</style>
+
+<table class="fedexTable"> 
+<tr>
+<th>Enter Text</th>
+<th>Enter Text</th>
+<th>Enter Text</th>
+</tr>
+</table>
+</template>
+
+<!----------------------------------------------------FEDEX DROP DOWN MENU COMPONENT----------------------->
+<template id="fedexdropdownmenu">
+<style>
+.fedexDropMenu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(77,20,140);
+	width:80%;
+	max-width:100%;
+}
+
+li {
+    float: left;
+}
+
+li a, .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+	
+}
+
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+</style>
+
+<ul class="fedexDropMenu"><li><a href="#home">Home</a></li><li><a href="#news">News</a></li><li class="dropdown"><a href="javascript:void(0)" class="dropbtn">Dropdown</a><div class="dropdown-content"><a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a></div></li></u>
+</template>
+
+ 
+
+<template id="fedexlayout">
+<!-- Always shows a header, even in smaller screens. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">Title</span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation. We hide it in small screens. -->
+      <nav class="mdl-navigation mdl-layout--large-screen-only">
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+      </nav>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Title</span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="">Link</a>
+      <a class="mdl-navigation__link" href="">Link</a>
+      <a class="mdl-navigation__link" href="">Link</a>
+      <a class="mdl-navigation__link" href="">Link</a>
+    </nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content"><!-- Your content goes here --></div>
+  </main>
+</div>
+</template>
+
+<!----------------------------------------------------FEDEX BOX MENU COMPONENT------------------>
+<!--content editable uses a doubleclick activation because an anchor uses a click.  But this needs work-->
+<template id="fedexnavlist">
+<link rel="stylesheet" href="boxmenu.css"> 
+<script defer src="jquery.js"></script>
+<ul>
+<span style="font-weight:bold;color:rgb(120,120,120);padding:5px;">FedEx Secondary Menu</span>
+	<li><a href="#" class="item_content" contenteditable="true" ondblclick="$(this).focus();innerHTML= 'Edit mode';">Menu link one</a></li>
+    <li><a href="#">Menu link two</a</li>
+	<hr></hr>
+    <li><a href="#">Menu link three</a</li>
+    <li><a href="#">Menu link four</a</li>
+    <li><a href="#">Menu link five</a</li>
+    <li><a href="#">Menu link six</a</li>
+</ul>
+</template>
+
+<!-----------------------------------------FEDEX LEADERBOARD CUSTOM ELEMENT------------------------------------->
+<!--sized to fit into 480px cell phone column-->
+<template id="fedexleaderboard">
+<div id="leaderboarddiv" style="width:302px;font-family:roboto;border: thin solid silver;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);margin-bottom:50px;">
+<div style="font-size:20px;color:silver;margin-top:10px;margin-bottom:20px;text-align:center;">Leaderboard</div> 
+ 
+<div id="canvas" >
+<button class="accordion"><div class="circle" id="circles-1"></div><img src="person1.png" style="height:50px;width:50px;margin-left:20px;"></image><span style="font-size:16px;margin-left:20px;color:silver">Tim Jackson</span></button>
+<div class="panel">
+<div id="chart_div"></div>
+</div>
+
+<button class="accordion"><div class="circle" id="circles-2"></div><img src="personB.png" style="height:50px;width:50px;margin-left:20px;"></image><span style="font-size:16px;margin-left:20px;color:silver">Mary Hart</span></button>
+<div class="panel">
+<div id="chart_div2"></div> 
+</div>
+
+<button class="accordion"><div class="circle" id="circles-3"></div><img src="personC.png" style="height:50px;width:50px;margin-left:20px;"></image><span style="font-size:16px;margin-left:20px;color:silver">Bill Perterson</span></button>
+<div class="panel">
+<div id="chart_div3"></div>   
+</div>
+
+<button class="accordion"><div class="circle" id="circles-4"></div><img src="personD.png" style="height:50px;width:50px;margin-left:20px;"></image><span style="font-size:16px;margin-left:20px;color:silver">James Johnson</span></button>
+<div class="panel">
+<div id="chart_div4"></div>  
+</div>
+
+<button class="accordion"><div class="circle" id="circles-5"></div><img src="personE.png" style="height:50px;width:50px;margin-left:20px;"></image><span style="font-size:16px;margin-left:20px;color:silver">Stacy Somebody</span></button>
+<div class="panel">
+<div id="chart_div5"></div> 
+</div>
+<button id="add_button" style="background-color:white;border:none;float:right;">+</button>
+<button id="substract_button" style="background-color:white;border:none;float:right;">-</button>	
+</div><!--canvas-->
+
+<style>
+		#canvas .circle {
+			display: inline-block;
+			margin-left:15px;
+			margin-top:8px;
+			margin-bottom:8px;
+		}
+		.circles-decimals {
+			font-size: .4em;
+		}
+</style>
+		
+<style>
+.accordion {
+    background-color: white;
+    color: #444;
+    cursor: pointer;
+    padding: 0px;
+    width: 300px;
+    border: thin solid rgb(230,230,230);
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+.active, .accordion:hover {
+    background-color: white;
+}
+
+.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+</style>
+ 
+	
+<!--https://github.com/lugolabs/circles-->
+	<script src="circles.min.js"></script><!--this has to be external of template-->
+
+ 
+<script>
+//Circular Chart
+		//@ http://jsfromhell.com/array/shuffle [v1.0]
+		function shuffle(o){ //v1.0
+			for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+			return o;
+		}
+		var colors = [
+			['#D3B6C6', '#4B253A'], ['#FCE6A4', '#EFB917'], ['#BEE3F7', '#45AEEA'], ['#F8F9B6', '#D2D558'], ['#F4BCBF', '#D43A43']
+		], circles = [];
+		for (var i = 1; i <= 5; i++) {
+			var child = document.getElementById('circles-' + i),
+				percentage = 31.42 + (i * 9.84);
+			circles.push(Circles.create({
+				id:         child.id,
+				value:		percentage,
+				radius:     30,
+				width:      6,
+				colors:     colors[i - 1]
+			}));
+		}
+		document.getElementById('add_button').onclick = function()
+		{
+		    for(var i = 0, l = circles.length; i < l; i++)
+				circles[i].update(circles[i]._value + 10, 250);
+		};
+		document.getElementById('substract_button').onclick = function()
+		{
+			for(var i = 0, l = circles.length; i < l; i++)
+				circles[i].update(circles[i]._value - 10, 250);
+		};
+		document.getElementById('add_width_button').onclick = function()
+		{
+			for(var i = 0, l = circles.length; i < l; i++)
+				circles[i].updateWidth(circles[i]._strokeWidth + 10);
+		};
+		document.getElementById('substract_width_button').onclick = function()
+		{
+			for(var i = 0, l = circles.length; i < l; i++)
+				circles[i].updateWidth(circles[i]._strokeWidth - 10);
+		};
+		document.getElementById('colors_button').onclick = function()
+		{
+			colors = shuffle(colors);
+			for(var i = 0, l = circles.length; i < l; i++)
+				circles[i].updateColors(colors[i]);
+		};
+		
+</script>
+
+<script>		 
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  });
+}
+</script>
+
+ 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script>
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Route', 'Vol', { role: 'style' }],
+        ['Seg 1', 450, 'silver'],
+        ['Seg 2', 589, 'teal'],
+        ['Seg 3', 450, 'tan'],
+        ['Seg 4', 1235, 'blue'],
+        ['Seg 5', 900, 'salmon']
+      ]);
+
+      var options = {
+        title: 'Segment Performance',
+		 legend:'none',
+        chartArea: {width: '75%'},
+        hAxis: {
+          title: '',
+          minValue: 0
+        },
+        vAxis: {
+          title: ''
+        },
+		colors: ['#e0440e', 'blue', '#ec8f6e', '#f3b49f', '#f6c7b6']
+		};
+
+      var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+	  chart.draw(data, options);
+	 }
+</script>
+
+
+<script>	 
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Route', 'Vol', { role: 'style' }],
+        ['Seg 1', 450, 'silver'],
+        ['Seg 2', 589, 'teal'],
+        ['Seg 3', 450, 'tan'],
+        ['Seg 4', 1235, 'blue'],
+        ['Seg 5', 900, 'salmon']
+      ]);
+
+      var options = {
+        title: 'Segment Performance',
+		 legend:'none',
+        chartArea: {width: '75%'},
+        hAxis: {
+          title: '',
+          minValue: 0
+        },
+        vAxis: {
+          title: ''
+        },
+		colors: ['#e0440e', 'blue', '#ec8f6e', '#f3b49f', '#f6c7b6']
+		};
+
+      var chart = new google.visualization.BarChart(document.getElementById('chart_div2'));
+	  chart.draw(data, options);
+	 }
+</script>
+
+<script>	 
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Route', 'Vol', { role: 'style' }],
+        ['Seg 1', 450, 'silver'],
+        ['Seg 2', 589, 'teal'],
+        ['Seg 3', 450, 'tan'],
+        ['Seg 4', 1235, 'blue'],
+        ['Seg 5', 900, 'salmon']
+      ]);
+
+      var options = {
+        title: 'Segment Performance',
+		 legend:'none',
+        chartArea: {width: '75%'},
+        hAxis: {
+          title: '',
+          minValue: 0
+        },
+        vAxis: {
+          title: ''
+        },
+		colors: ['#e0440e', 'blue', '#ec8f6e', '#f3b49f', '#f6c7b6']
+		};
+
+      var chart = new google.visualization.BarChart(document.getElementById('chart_div3'));
+	  chart.draw(data, options);
+	 }
+</script>
+
+<script>	 
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Route', 'Vol', { role: 'style' }],
+        ['Seg 1', 450, 'silver'],
+        ['Seg 2', 589, 'teal'],
+        ['Seg 3', 450, 'tan'],
+        ['Seg 4', 1235, 'blue'],
+        ['Seg 5', 900, 'salmon']
+      ]);
+
+      var options = {
+        title: 'Segment Performance',
+		 legend:'none',
+        chartArea: {width: '75%'},
+        hAxis: {
+          title: '',
+          minValue: 0
+        },
+        vAxis: {
+          title: ''
+        },
+		colors: ['#e0440e', 'blue', '#ec8f6e', '#f3b49f', '#f6c7b6']
+		};
+
+      var chart = new google.visualization.BarChart(document.getElementById('chart_div4'));
+	  chart.draw(data, options);
+	 }
+</script>
+
+<script>	 
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['Route', 'Vol', { role: 'style' }],
+        ['Seg 1', 450, 'silver'],
+        ['Seg 2', 589, 'teal'],
+        ['Seg 3', 450, 'tan'],
+        ['Seg 4', 1235, 'blue'],
+        ['Seg 5', 900, 'salmon']
+      ]);
+
+      var options = {
+        title: 'Segment Performance',
+		 legend:'none',
+        chartArea: {width: '75%'},
+        hAxis: {
+          title: '',
+          minValue: 0
+        },
+        vAxis: {
+          title: ''
+        },
+		colors: ['#e0440e', 'blue', '#ec8f6e', '#f3b49f', '#f6c7b6']
+		};
+
+      var chart = new google.visualization.BarChart(document.getElementById('chart_div5'));
+	  chart.draw(data, options);
+	 }
+</script>
+</template>
+
+<!--Note: the variable for each constructor must be unique...as in tmplbutton or tmplheader-->
+<!---------------------------------------------COMPONENT SCRIPTS------------------------------------->
+<script>
+//fedexheader (in this iteration (v79 fedexheader is now a custom element rather than component
+//when first created on drop it picks up width as 800px from append code...thereafter it just gets the value from the reize boxses entered by the euser.
+
+/*var tmplheader = document.querySelector('#fedexheader');
+
+
+class fxheader extends HTMLElement { 
+
+static get observedAttributes() { return ["w", "1"]; }   
+
+constructor() {
+super();  
+ 
+var shadow = this.attachShadow({mode: 'open'});
+//shadowRoot.appendChild(tmplheader.content.cloneNode(true));
+var div = document.createElement('div');
+var style = document.createElement('style');
+
+ 
+
+shadow.appendChild(style);
+shadow.appendChild(div); //MUST BE INSIDE CONSTRUCTOR
+}
+	
+connectedCallback() {
+updateStyle(this);
+}
+
+disconnectedCallback() {
+    console.log('Custom square element removed from page.');
+}
+
+adoptedCallback() {
+    console.log('Custom square element moved to new page.');
+}
+
+attributeChangedCallback(name, oldValue, newValue) {
+  //alert(name + " " + oldValue + " " + newValue);  
+  
+  }
+  
+
+
+};
+
+//Final step: Define the new element.  This is the CustomElementRegistry.define() method.
+customElements.define('fedex-header', fxheader);
+
+function updateStyle(elem) {
+//alert(elem);
+  var shadow = elem.shadowRoot;
+  var childNodes = shadow.childNodes;
+  for(var i = 0; i < childNodes.length; i++) {
+    if(childNodes[i].nodeName === 'STYLE') {
+      childNodes[i].textContent = 'div {' +
+                          ' width: ' + elem.getAttribute('l') + 'px;' +
+                          ' height: ' + elem.getAttribute('l') + 'px;' +
+                          ' background-color: ' + elem.getAttribute('c');
+    }
+  }
+}*/
+
+//fedexbutton 
+let tmplbutton = document.querySelector('#fedexbutton');
+customElements.define('fedex-button', class extends HTMLElement {
+    constructor() {
+      super();  
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmplbutton.content.cloneNode(true));
+	}
+});
+
+//fxcardclass
+let tmplcard = document.querySelector('#fedexcard');
+customElements.define('fedex-card', class extends HTMLElement {
+    constructor() {
+      super();  
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmplcard.content.cloneNode(true));
+	}
+});
+
+//fxtextareaclass
+let tmpltextarea = document.querySelector('#fedextextarea');
+customElements.define('fedex-textarea', class extends HTMLElement {
+    constructor() {
+      super();  
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmpltextarea.content.cloneNode(true));
+	}
+});
+
+//fxcheckboxclass
+let tmplcheckbox = document.querySelector('#fedexcheckbox');
+customElements.define('fedex-checkbox', class extends HTMLElement {
+    constructor() {
+      super();  
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmplcheckbox.content.cloneNode(true));
+	}
+});
+
+//fxradiobuttonclass
+let tmplradiobutton = document.querySelector('#fedexradiobutton');
+customElements.define('fedex-radiobutton', class extends HTMLElement {
+    constructor() {
+      super();  
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmplradiobutton.content.cloneNode(true));
+	}
+});
+
+//fedexparagraphclass
+let tmplparagraph = document.querySelector('#fedexparagraph');
+customElements.define('fedex-paragraph', class extends HTMLElement {
+    constructor() {
+      super();  
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmplparagraph.content.cloneNode(true));
+	}
+});
+
+//fedextableclass
+let tmpltable = document.querySelector('#fedextable');
+customElements.define('fedex-table', class extends HTMLElement {
+    constructor() {
+      super();  
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmpltable.content.cloneNode(true));
+	}
+});
+
+//fedexdropdownmenuclass
+let tmpldropdownmenu = document.querySelector('#fedexdropdownmenu');
+customElements.define('fedex-dropdownmenu', class extends HTMLElement {
+    constructor() {
+      super();  
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmpldropdownmenu.content.cloneNode(true));
+	}
+});
+
+//fedex box menu
+let tmplnavlist = document.querySelector('#fedexnavlist');
+customElements.define('fedex-navlist', class extends HTMLElement {
+    constructor() {
+      super();  
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmplnavlist.content.cloneNode(true));
+	}
+});
+
+//This is leaderboard as a custom elements
+//fedex leaderboard (customElements)
+customElements.define('fedex-leaderboard', class extends HTMLElement {
+connectedCallback() {
+				//this.innerHTML = "<b>This is an notice that fedex-leaderboard has been added to the DOM</b>";
+				//shadowRoot.appendChild(tmpl.content.cloneNode(true));
+this.appendChild(fedexleaderboard.content.cloneNode(true));  //this works
+}
+});
+
+//this is leaderboard as a component in the shadow dom (functionality is lost because it cant reach the script links
+//fedex leaderboard  
+
+/*let tmplleaderboard = document.querySelector('#fedexleaderboard');
+customElements.define('fedex-leaderboard', class extends HTMLElement {
+	constructor() {
+      super();  
+      let shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(tmplleaderboard.content.cloneNode(true));
+  
+  }
+});*/
+ 
+//Removed from menu:  But this is format to create a custom element rather than component
+//var XFooProto = Object.create(HTMLElement.prototype);
+//XFooProto.createdCallback = function() {
+//this.innerHTML = '<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown button</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a></div</div>'
+//};
+//var XFoo = document.registerElement('x-foo-with-markup', {prototype: XFooProto});
+
+</script>
+
+<!------------------------------------------------------CSS------------------------------------------->
+<!--default text is roboto 18px-->
+<!--Notes:  IMPORTATNT: You must give an element left and top relative position in its style in order to make it draggable
+Do NOT give an element an initial drop position. Also, the styling for the individual components is in the templates-->
+<style>
+
+			/*body /deep/ span {
+  color:red;
+}*/
+
+//body /deep/.world {color:green;}
+
+//fedex-header/deep/.world {color:hotpink;}
+
+fedex-header/deep/div {background:tan;}
+
+
+:root {
+	--fedexpurple: rgb(77,20,140);
+	--fedexgray: rgb(153,153,153);
+	--fedexblue: blue;
+	--fedexwhite: white;
+	--fedexhighlight: rgb(230,230,230);
+}
+
+html, body {
+	margin: 0px;
+	font-family:roboto;
+	font-size: 18px;
+	}  
+
+.content-grid {
+  max-width: device-width;
+	}
+
+.fxDiv {
+	width:50%;
+	height:60%;
+	background-color:tan;
+}
+
+ 
+
+.tom {border:black thin dotted;}
+
+.paul {background-color:white;min-height:80px;} //set min initial height for the grid cells, they expand with added content
+
+.ui-menu { width: 150px; }
+
+/*main menu*/
+
+#jsddm
+{	margin: 0;
+	padding: 0;
+	  
+	}
+	
+	#jsddm li
+	{	float: left;
+		list-style: none;
+		font: 14px Arial
+		color: black;
+		}
+
+	#jsddm li a
+	{	display: block;
+		background: transparent;
+		padding: 5px 12px;
+		text-decoration: none;
+		border-right: 1px solid rgb(77,20,140);
+		width: 120px;
+		color: #EAFFED;
+		white-space: nowrap;
+		}
+
+	#jsddm li a:hover
+	{	background: transparent;}
+	 
+		
+		#jsddm li ul
+		{	margin: 0;
+			padding: 0;
+			position: absolute;
+			visibility: hidden;
+			border-top: 1px solid rgb(77,20,140);
+			}
+		
+		#jsddm li ul li
+		{	float: none;
+			display: inline;
+			}
+		
+		#jsddm li ul li a
+		{	width: 130;
+			background: rgba(77,20,140, 0.7);
+			}
+			
+		
+		#jsddm li ul li a:hover
+		{	background: rgba(77,20,140, 0.7)}
+
+/*MDL ICONS*/
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+.material-icons {cursor: pointer}
+.material-icons.fedexorange { color: rgb(255,102,0);}
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+
+.ui-resizable { position: relative;}
+.ui-resizable-handle { position: absolute;font-size: 0.1px; display: block; }
+.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
+.ui-resizable-n { cursor: n-resize; height: 7px; width: 100%; top: -5px; left: 0; }
+.ui-resizable-s { cursor: s-resize; height: 7px; width: 100%; bottom: -5px; left: 0; }
+.ui-resizable-e { cursor: e-resize; width: 7px; right: -5px; top: 0; height: 100%; }
+.ui-resizable-w { cursor: w-resize; width: 7px; left: -5px; top: 0; height: 100%; }
+.ui-resizable-se { cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; }
+.ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
+.ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
+.ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}
+
+/*SLIDER SWITCH*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 17px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 0px;
+  background-color:gray;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: rgb(255,102,0);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+</style>
+
+<!--yy is a global that is set when a user double clicks an object...which displays the id of the selected object
+in the property sheet and then the user selects the delete button and that button uses yy and remove(0 to make it happen.-->
+
+<!--TABS, SELECT ELEMENT AND RESIZE--> 
+<script>
+$( function() {
+    $( "#tabs" ).tabs();
+  } );
+
+//Called from inline script in each element with a doubleclick on the object  
+function myFunction(xx) {
+    document.getElementById("trashcan").innerHTML = $(xx).attr('id');
+	document.getElementById("selecteditem").innerHTML = "<span style='color:white;'>Selected Item ID:</span>" + " " + $(xx).attr('id');
+	yy = null;
+	  yy = $(xx).attr('id');
+	  //document.getElementById(yy).style.border = 'medium dotted green';
+}
+//called from clicking the ok button in the size property sheet
+function setsize(pp , kk){
+//$("#fxheaderid").width(tt);
+$( '#' + yy ).width(pp);
+$( '#' + yy ).height(kk);
+oo =  yy;
+ 
+//document.getElementById("fxheaderid").style.border = "none";
+document.getElementById(oo).style.border = "none";
+ 
+}
+</script>
+
+
+<script type="text/javascript">
+
+(function( $ ) {
+    'use strict';
+})( jQuery );     <!--protects the jquery shorthand selector $ namespace from other who use it-->
+
+var droptarget  <!--declares a global variable.  It must be declared outside a function to be global-->
+var mdlGrid
+
+function buildGrid(){
+//$("body").append('<DIV class="content-grid mdl-grid" id="mdlGrid"><div id="stuff8" class="mdl-cell mdl-cell--12-col tom paul"></div><div id="stuff9" class="mdl-cell mdl-cell--6-col tom paul" ></div><div id="stuff10" class="mdl-cell mdl-cell--6-col tom paul"></div><div id="stuff"  class="mdl-cell mdl-cell--5-col tom paul" ></div><div id="stuff2" class="mdl-cell mdl-cell--4-col tom paul"></div><div id="stuff3" class="mdl-cell mdl-cell--3-col tom paul"></div><div id="stuff4" class="mdl-cell mdl-cell--5-col tom paul"></div><div id="stuff5" class="mdl-cell mdl-cell--2-col tom paul"></div><div id="stuff6" class="mdl-cell mdl-cell--2-col tom paul"></div><div id="stuff7" class="mdl-cell mdl-cell--3-col tom paul"></div>');
+location.reload();
+} 
+
+function grid(){
+if($('#gridCheck').prop('checked'))
+{
+buildGrid();
+}
+else
+{
+mdlGrid = $('#mdlGrid').remove();
+}
+
+}
+
+function changeImage(xx) {
+ //alert(xx);
+var xxx = document.getElementById("jim").files[0].name; //use this format to get rid of filepath secruity measure
+ //alert(chosenPic);
+$(xx).attr("src",xxx);
+}  
+  
+
+function toggleDisplay(divId) {
+ $("#"+divId).toggle();
+}
+
+//TOOLTIPS
+ //$( function() {
+
+     //$( document ).tooltip();
+
+   //} );
+
+/*$( function() {
+
+    $( document ).tooltip({
+		items: "img, [data-geo], [title]",
+		content: function() {
+		var element = $( this );
+		if ( element.is( "[data-geo]" ) ) {
+			return "<img src='header.png'><br/><div style='font-size:12px;padding:10px;);'>This is a header.  It's a new HTML 5 tag and can be used in any section on the page. While it's most often used at the top of a section, it can be used within the body of a section. Click on the text to add your own title.</div>";
+			}
+		}
+	});
+	} );*/
+	
+//jQUERY MENU
+$( function() {
+
+    $( "#menu" ).menu();
+
+  } );
+  
+var timeout    = 500;
+var closetimer = 0;
+var ddmenuitem = 0;
+
+function jsddm_open()
+{  jsddm_canceltimer();
+   jsddm_close();
+   ddmenuitem = $(this).find('ul').css('visibility', 'visible');}
+
+function jsddm_close()
+{  if(ddmenuitem) ddmenuitem.css('visibility', 'hidden');}
+
+function jsddm_timer()
+{  closetimer = window.setTimeout(jsddm_close, timeout);}
+
+function jsddm_canceltimer()
+{  if(closetimer)
+   {  window.clearTimeout(closetimer);
+      closetimer = null;}}
+
+$(document).ready(function()
+{  $('#jsddm > li').bind('mouseover', jsddm_open)
+   $('#jsddm > li').bind('mouseout',  jsddm_timer)});
+
+document.onclick = jsddm_close;
+
+$( init );
+
+function init() {
+
+$('#headericon').draggable( {
+ //containment: 'document',   
+ cursor: 'move',
+ helper:headerHelper
+  })
+  
+  $('#buttonicon').draggable( {
+ //containment: 'document',   
+ cursor: 'move',
+ helper:buttonHelper
+  })
+  
+$('#switchicon').draggable( {
+ //containment: 'document',   
+ cursor: 'move',
+ helper:mdlSwitchHelper
+  })
+  
+  $('#slidericon').draggable( {
+ //containment: 'document',   
+ cursor: 'move',
+ helper:mdlSliderHelper
+  })
+  
+  $('#squarecardicon').draggable( {
+// containment: 'document',   
+ cursor: 'move',
+ helper:SquareCardHelper
+  })
+  
+  $('#textareaicon').draggable( {
+// containment: 'document',   
+ cursor: 'move',
+ helper:textAreaHelper
+  })
+  
+$('#paragraphicon').draggable( {
+// containment: 'document',   
+ cursor: 'move',
+ helper:paragraphHelper
+  })
+  
+$('#checkboxicon').draggable( {
+// containment: 'document',   
+ cursor: 'move',
+ helper:checkboxHelper
+  })
+  
+  $('#radioicon').draggable( {
+// containment: 'document',   
+ cursor: 'move',
+ helper:radioHelper
+  })
+  
+  $('#tableicon').draggable( {
+// containment: 'document',   
+ cursor: 'move',
+ helper:tableHelper
+  })
+  
+   $('#dropmenuicon').draggable( {
+// containment: 'document',   
+ cursor: 'move',
+ helper:dropMenuHelper
+  })
+  
+  
+	
+	$('#navlisticon').draggable( {
+	cursor: 'move',
+	helper:navlistHelper
+	})
+  
+$('#leaderboardicon').draggable( {
+	cursor: 'move',
+	helper:navlistHelper
+	})
+
+	
+<!--GET ID OF DROP TARGET AND HIGHLIGHT DROPTARGET BORDER IN RED-->
+ $(function() {
+$("body").droppable({
+     over: function(event, ui) {
+     $('#display').html( 'body' );
+     droptarget =  document.getElementById('display').innerHTML;
+	 }
+});
+}); 
+
+<!--OVER--> 
+$(function() {
+$(".mdl-cell").droppable({
+     over: function(event, ui) {
+	 
+     $('#display').html( this.id ).prepend("#");
+       droptarget =  document.getElementById('display').innerHTML;
+	 nn = this.id;
+	 document.getElementById(nn).style.border = "thin red solid";
+	  
+}
+});
+});
+
+<!--OUT-->
+$(function() {
+$(".mdl-cell").droppable({
+     out: function(event, ui) {
+	 
+     //$('#display').html( this.id ).prepend("#");
+       //droptarget =  document.getElementById('display').innerHTML;
+	 nn = this.id;
+	 document.getElementById(nn).style.border = "thin gray solid";
+	  
+}
+});
+});  
+
+$('body').droppable({drop: handleDropEvent});
+
+} //init
+
+<!------------------------------------BEGIN ELEMENT AND COMPONENT DEFINITIONS--------------------------------->
+<!--BEGIN DROP FUNCTION-->
+<!-----------------------------------------------------CARD (NEW)---------------------------------------------->
+function handleDropEvent( event, ui ) {
+var draggable = ui.draggable;  //object being dragged
+
+
+if ($(draggable).attr('id') == "squarecardicon") { 
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-card id="fxcardid" class="fxcardclass"  ondblclick="myFunction(fxcardid)"><img id="cardimage" slot="card-image" src="squarecardimage.jpg" style="max-height: 100%; max-width: 100%" /></fedex-card>');
+//alert($(this).attr('id'));
+$(".fxcardclass").resizable();
+$(".fxcardclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+ 
+} <!--end if-->
+if ($(draggable).attr('id') == "fxcardid" && olddropbutton != droptarget) 
+{ 
+$(ui.draggable).remove();
+//alert($(droptarget).attr('id'));  
+$(droptarget).append('<fedex-card id="fxcardid" class="fxcardclass"  ondblclick="myFunction(fxcardid)"><img id="cardimage" slot="card-image" src="squarecardimage.jpg" style="max-height: 100%; max-width: 100%" /></fedex-card>');
+ 
+$(".fxcardclass").resizable();
+$(".fxcardclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+olddropbutton = droptarget;
+}<!--end if-->
+ 
+
+<!--THIS WORKS.  SETTING STYLE USING REFLECTED PROPERTIES/ATTRIBUTES AND EXTERNAL STYLE SHEET. 
+<!------------------------------------------------------FEDEX HEADER---------------------------->
+if ($(draggable).attr('id') == "headericon") { 
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-header  id="fxheaderid" class="fxheaderclass" ondblclick="myFunction(fxheaderid)"><img id="headerimage" slot="header-image" src="squarecardimage.jpg" style="max-height: 100%; max-width: 100%;" /><span id="headerslot1" slot="element-name" style="color:white;margin-left:50px;">Enter Title</span><span id="headerslot2" style="color:white;margin-left:30px;color:silver;">Enter Sub-Title</span><button type="button" id="headerslot3"  name="button-slot" style="line-height:2;color:white;font-size:16px;height:40px;width:140px;background-color:transparent;float:right;margin-right:20px;margin-top:20px;margin-bottom:10px;">Enter Caption</button></fedex-header>');
+$(".fxheaderclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+}  
+
+if ($(draggable).attr('id') == "fxheaderid" && olddropbutton != droptarget) 
+{ 
+document.getElementById('fxheaderid').remove();
+$(droptarget).append('<fedex-header  id="fxheaderid" class="fxheaderclass" ondblclick="myFunction(fxheaderid)"><img id="headerimage" slot="header-image" src="squarecardimage.jpg" style="max-height: 100%; max-width: 100%;" /><span id="headerslot1" slot="element-name" style="color:white;margin-left:50px;">Enter Title</span><span id="headerslot2" style="color:white;margin-left:30px;color:silver;">Enter Sub-Title</span><button type="button" id="headerslot3"  name="button-slot" style="line-height:2;color:white;font-size:16px;height:40px;width:140px;background-color:transparent;float:right;margin-right:20px;margin-top:20px;margin-bottom:10px;">Enter Caption</button></fedex-header>');
+$(".fxheaderclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+olddropbutton = droptarget;
+} 
+
+<!------------------------------------------------------FEDEX BUTTON-------------------------------->
+if ($(draggable).attr('id') == "buttonicon") { 
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-button id="fxbuttonid" class="fxbuttonclass" ondblclick="myFunction(fxbuttonid)"></fedex-button>');
+//alert($(this).attr('id'));
+$(".fxbuttonclass").resizable();
+$(".fxbuttonclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+ 
+} <!--end if-->
+if ($(draggable).attr('id') == "fxbuttonid" && olddropbutton != droptarget) 
+{ 
+$(ui.draggable).remove();
+//alert($(droptarget).attr('id'));  
+$(droptarget).append('<fedex-button id="fxbuttonid" class="fxbuttonclass" ondblclick="myFunction(fxbuttonid)"></fedex-button>');
+ 
+$(".fxbuttonclass").resizable();
+$(".fxbuttonclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+olddropbutton = droptarget;
+}<!--end if-->
+
+<!-----------------------------------------------------------FEDEX TEXTAREA---------------------->
+if ($(draggable).attr('id') == "textareaicon") { 
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-textarea id="fxtextareaid" class="fxtextareaclass" ondblclick="myFunction(fxtextareaid)"></fedex-textarea>');
+//alert($(this).attr('id'));
+$(".fxtextareaclass").resizable();
+$(".fxtextareaclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+ 
+} <!--end if-->
+if ($(draggable).attr('id') == "fxtextareaid" && olddropbutton != droptarget) 
+{ 
+
+$(ui.draggable).remove();  //u.draggle returns the object being dragged and allows multiple objects of same class to be dragged and not removed
+//alert($(droptarget).attr('id'));  
+$(droptarget).append('<fedex-textarea id="fxtextareaid" class="fxtextareaclass" ondblclick="myFunction(fxtextareaid)"></fedex-textarea>');
+ 
+$(".fxtextareaclass").resizable();
+$(".fxtextareaclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+olddropbutton = droptarget;
+}<!--end if-->
+
+<!-----------------------------------------------------------MDL FAB-->
+if ($(draggable).attr('id') == "switchicon") 
+{   
+olddropbutton = droptarget; 
+var button = document.createElement('button');
+  var textNode = document.createTextNode('Click Me!');
+  button.appendChild(textNode);
+  button.style.fontSize = '12px'; 
+  button.className = 'mdl-button mdl-js-button mdl-button--fab mdl-button--colored';
+  button.id = 'fabbutton';
+  componentHandler.upgradeElement(button);
+  //document.getElementById('stuff8').appendChild(button);
+  $(droptarget).append(button);
+$(button).draggable( {
+	containment: "window",   
+	cursor: 'move',
+	revert: false,
+	cancel: null //this is the key to making elements that take a focus on click, draggable
+});
+} <!--end if-->
+
+if ($(draggable).attr('id') == "fabbutton" && olddropbutton != droptarget) 
+{   
+$(draggable).remove(); 
+ var button = document.createElement('button');
+  var textNode = document.createTextNode('Click Me!');
+  button.appendChild(textNode);
+  button.style.fontSize = '12px'; 
+  button.className = 'mdl-button mdl-js-button mdl-button--fab mdl-button--colored';
+  button.id = 'fabbutton';
+  componentHandler.upgradeElement(button);
+  //document.getElementById('stuff8').appendChild(button);
+  $(droptarget).append(button);
+$(button).draggable( {
+	containment: "window",   
+	cursor: 'move',
+	revert: false,
+	cancel: null //this is the key to making elements that take a focus on click, draggable
+});
+olddropbutton = droptarget;
+} <!--end if-->
+
+<!------------------------------------------------------FEDEX CHECKBOX COMPONENT----------------------------------->
+if ($(draggable).attr('id') == "checkboxicon") { 
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-checkbox id="fxcheckboxid" class="fxcheckboxclass" ondblclick="myFunction(fxcheckboxid)"></fedex-checkbox>');
+//alert($(this).attr('id'));
+$(".fxcheckboxclass").resizable();
+$(".fxcheckboxclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+ 
+} <!--end if-->
+if ($(draggable).attr('id') == "fxcheckboxid" && olddropbutton != droptarget) 
+{ 
+$(ui.draggable).remove();
+//alert($(droptarget).attr('id'));  
+$(droptarget).append('<fedex-checkbox id="fxcheckboxid" class="fxcheckboxclass" ondblclick="myFunction(fxcheckboxid)"></fedex-checkbox>');
+ 
+$(".fxcheckboxclass").resizable();
+$(".fxcheckboxclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+olddropbutton = droptarget;
+}<!--end if-->
+
+<!---------------------------------------------------------FEDEX RADIO BUTTON COMPONENT--------------------->
+if ($(draggable).attr('id') == "radioicon") { 
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-radiobutton id="fxradiobuttonid" class="fxradiobuttonclass" ondblclick="myFunction(fxradiobuttonid)"></fedex-radiobutton>');
+$(".fxradiobuttonclass").resizable();
+$(".fxradiobuttonclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+ 
+} <!--end if-->
+if ($(draggable).attr('id') == "fxradiobuttonid" && olddropbutton != droptarget) 
+{ 
+$(ui.draggable).remove();
+//alert($(droptarget).attr('id'));  
+$(droptarget).append('<fedex-radiobutton id="fxradiobuttonid" class="fxradiobuttonclass" ondblclick="myFunction(fxradiobuttonid)"></fedex-radiobutton>');
+ 
+$(".fxradiobuttonclass").resizable();
+$(".fxradiobuttonclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+olddropbutton = droptarget;
+}<!--end if-->
+
+<!--------------------------------------------------------FEDEX PARAGRAPH COMPONENT----------------->
+ if ($(draggable).attr('id') == "paragraphicon") { 
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-paragraph id="fxparagraphid" class="fxparagraphclass" contenteditable="true" ondblclick="myFunction(fxparagraphid)"></fedex-paragraph>');
+$(".fxparagraphclass").resizable();
+$(".fxparagraphclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+ 
+} <!--end if-->
+if ($(draggable).attr('id') == "fxparagraphid" && olddropbutton != droptarget) 
+{ 
+$(ui.draggable).remove();
+$(droptarget).append('<fedex-paragraph id="fxparagraphid" class="fxparagraphclass" ondblclick="myFunction(fxparagraphid)"></fedex-paragraph>');
+ 
+$(".fxparagraphclass").resizable();
+$(".fxparagraphclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+olddropbutton = droptarget;
+}<!--end if-->
+ 
+<!--------------------------------------------------------------FEDEX TABLE COMPONENT------------------------->
+if ($(draggable).attr('id') == "tableicon") { 
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-table id="fxtableid" class="fxtableclass" contenteditable="true" ondblclick="myFunction(fxtableid)"></fedex-table>');
+$(".fxtableclass").resizable();
+$(".fxtableclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+ 
+} <!--end if-->
+if ($(draggable).attr('id') == "fxtableid" && olddropbutton != droptarget) 
+{ 
+$(ui.draggable).remove();
+$(droptarget).append('<fedex-table id="fxtableid" class="fxtableclass" ondblclick="myFunction(fxtableid)"></fedex-table>');
+ 
+$(".fxtableclass").resizable();
+$(".fxtableclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+olddropbutton = droptarget;
+}<!--end if-->
+ 
+<!--------------------------------------------------------FEDEX DROP DOWN MENU COMPONENT----------------->
+if ($(draggable).attr('id') == "dropmenuicon") { 
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-dropdownmenu id="fxdropdownmenuid" class="fxdropdownmenuclass" ondblclick="myFunction(fxdropdownmenuid)" ></fedex-dropdownmenu>');
+$(".fxdropdownmenuclass").resizable();
+$(".fxdropdownmenuclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+ 
+} <!--end if-->
+if ($(draggable).attr('id') == "fxdropdownmenuid" && olddropbutton != droptarget) 
+{ 
+$(ui.draggable).remove();
+$(droptarget).append('<fedex-dropdownmenu id="fxdropdownmenuid" class="fxdropdownmenuclass" ondblclick="myFunction(fxdropdownmenuid)"></fedex-dropdownmenu>');
+ 
+$(".fxdropdownmenuclass").resizable();
+$(".fxdropdownmenuclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+olddropbutton = droptarget;
+}<!--end if-->
+
+<!--------------------------------------------------------FEDEX BOX MENU COMPONENT----------------->
+ <!--Does  not read the Bootstrap CSS link because its encapsulated.  Use a custom element instead.-->
+
+if ($(draggable).attr('id') == "navlisticon") { 
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-navlist id="fxnavlistid" class="fxnavlistclass" ondblclick="myFunction(fxnavlistid)"  ></fedex-navlist>');
+$(".fxnavlistclass").resizable();
+$(".fxnavlistclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+ 
+} <!--end if-->
+if ($(draggable).attr('id') == "fxnavlistid" && olddropbutton != droptarget) 
+{ 
+$(ui.draggable).remove();
+$(droptarget).append('<fedex-navlist id="fxnavlistid" ondblclick="myFunction(fxnavlistid)" class="fxnavlistclass"></fedex-navlist>');
+ 
+$(".fxnavlistclass").resizable();
+$(".fxnavlistclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+olddropbutton = droptarget;
+}<!--end if-->
+
+
+<!--------------------------------------------------FEDEX LEADERBOARD------------------------------------>
+ 
+ if ($(draggable).attr('id') == "leaderboardicon") { 
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-leaderboard id="fxleaderboardid" class="fxleaderboardclass"   ondblclick="myFunction(fxleaderboardid)"  ></fedex-leaderboard>');
+//$(".fxleaderboardclass").resizable();
+$(".fxleaderboardclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+ 
+} <!--end if-->
+if ($(draggable).attr('id') == "fxleaderboardid" && olddropbutton != droptarget) 
+{ 
+$(ui.draggable).remove();
+$(droptarget).append('<fedex-leaderboard id="fxleaderboardid" ondblclick="myFunction(fxleaderboardid)" class="fxleaderboardclass"></fedex-leaderboard>');
+ 
+//$(".fxleaderboardclass").resizable();
+$(".fxleaderboardclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+olddropbutton = droptarget;
+}<!--end if-->
+
+} <!--handleDropEvent-->
+
+<!--HELPERS-->
+function headerHelper( event ) {  return '<i class="material-icons md-36" id="headericon">title</i>';}
+function buttonHelper( event ) {  return '<i class="material-icons md-36" id="switchicon">input</i><BR>';}
+function mdlSwitchHelper( event ) {  return '<i class="material-icons md-36" id="buttonicon">blur_circular</i><BR>';}
+function mdlSliderHelper( event)  {  return '<div id="slidericon" style="width:100px;height:30px;background-color:purple;color:white;text-align:center;z-index:300;">Slider</div>';}
+function SquareCardHelper( event)  {  return '<i class="material-icons md-36" id="squarecardicon">picture_in_picture</i><BR>';}
+function textAreaHelper( event)  {  return '<i class="material-icons md-36" id="textareaicon">keyboard</i><BR>';}
+function paragraphHelper( event)  {  return '<i class="material-icons md-36" id="divicon">format_align_left</i><BR>';}
+function checkboxHelper( event)  {  return '<i class="material-icons md-36" id="checkboxicon">check_box</i><BR>';}
+function radioHelper( event)  {  return '<i class="material-icons md-36" id="radioicon">radio_button_checked</i><BR>';}
+function tableHelper( event)  {  return '<i class="material-icons md-36" id="tableicon">border_all</i><BR>';}
+function dropMenuHelper( event)  {  return '<i class="material-icons md-36" id="dropmenuicon">menu</i><BR>';}
+function navlistHelper( event)  {  return '<i class="material-icons md-36" id="navlisticon">chrome_reader_mode</i><BR>';}
+function leaderboardHelper( event)  {  return '<i class="material-icons md-36" id="leaderboardicon">face</i><BR>';}
+
+//var x = $(".mainheader").offset();
+         //alert("Top: " + x.top + " Left: " + x.left); //this works
+</script>
+</head>
+ 
+<body  > <!--BEGIN BODY-->
+<!--HEADER & MAIN MENU BAR-->
+<div style="background-color:rgb(77,20,140);height:60px;">
+<i  class="material-icons md-36 fedexorange" onclick = "toggleDisplay('iconMenu');" style="position:absolute;top:18px;left:8px;">view_headline</i> 
+<i  class="material-icons md-36 fedexorange" onclick = "toggleDisplay('tabs');" style="position:absolute;top:18px;right:25px;">view_headline</i> 
+<i class="material-icons md-24 fedexorange" id="hidegrid" onclick = "$('#stuff8').toggleClass('tom');$('#stuff9').toggleClass('tom');$('#stuff10').toggleClass('tom');$('#stuff').toggleClass('tom');$('#stuff2').toggleClass('tom');$('#stuff3').toggleClass('tom');$('#stuff4').toggleClass('tom');$('#stuff5').toggleClass('tom');$('#stuff6').toggleClass('tom');$('#stuff7').toggleClass('tom');" style="position:absolute;top:24px;right:75px;">grid_on</i>
+<span style="color:white;font-family:arial;font-size:32px;font-weight:bold;padding-left:130px;line-height:2.0;">Fed<span style="color:rgb(255,102,0);font-family:arial;font-size:32px;font-weight:bold;line-height:1.8;">Ex</span></span>
+<span style="color:rgb(153,153,153);font-family:arial;font-size:20px;font-weight:normal;padding-left:20px;line-height:2.0;">Enterprise XD</span>
+
+<!--Slider switch-->
+<label class="switch" style="position:absolute;top:28px;right:120px;">
+  <input type="checkbox" checked id="gridCheck" onclick="grid();" >
+  <span class="slider round"></span>
+</label>
+
+</div> 
+
+<!--MAIN DROP MENU-->
+<ul id="jsddm" style="position:absolute;left:520px;top:22px;z-index:300;">
+    <li ><a href="#">About XD</a>
+        <ul >
+            <li><a href="#" >User Focus</a></li>
+            <li><a href="#">jQuery Plugin</a></li>
+            <li><a href="#">Ajax Navigation</a></li>
+        </ul>
+    </li>
+    <li><a href="#">Best Practice</a>
+        <ul>
+            <li><a href="#">Consistency</a></li>
+            <li><a href="#">User Control</a></li>
+            <li><a href="#">Prevent Errors</a></li>
+            <li><a href="#">Memory Load</a></li>
+            <li><a href="#">Mental Model</a></li>
+        </ul>
+    </li>
+    <li><a href="#">Templates</a></li>
+    <li><a href="#">XD Services</a></li>
+</ul>
+</div> 
+ 
+<!--LEFT ICON MENU-->    <!--href="" data-geo="-->
+<div id="iconMenu" style="position:absolute;left:0px;top:60px;background-color:rgb(80,80,80);width:70px;height:80%;text-align:center;z-index:1000;"><br />
+	<a href="" data-geo=""><i class="material-icons md-18 md-light" id="headericon">title</i></a><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="switchicon">blur_circular</i><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="buttonicon">input</i><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="squarecardicon">picture_in_picture</i><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="textareaicon">keyboard</i><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="paragraphicon">format_align_left</i><br /><span style="color:white;font-size:12px;"></span><BR> 		
+	<i class="material-icons md-18 md-light" id="checkboxicon">check_box</i><br /><span style="color:white;font-size:12px;"></span><BR>	
+	<i class="material-icons md-18 md-light" id="radioicon">radio_button_checked</i><br /><span style="color:white;font-size:12px;"></span><BR> 
+	<i class="material-icons md-18 md-light" id="tableicon">border_all</i><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="dropmenuicon">menu</i><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="navlisticon">chrome_reader_mode</i><br /><span style="color:white;font-size:12px;"></span><BR>
+	<i class="material-icons md-18 md-light" id="leaderboardicon">face</i><br /><span style="color:white;font-size:12px;"></span><BR>
+	
+	<!--<i class="material-icons md-18 md-light" id="paragraphicon">link</i><br /><span style="color:white;font-size:12px;">Link</span><BR>--> 
+	<!--<i class="material-icons md-36" id="slidericon">keyboard</i><BR>-->
+	<span id="display" style="padding-left:10px;color:white;font-size:14px;"></span><!--you can't get rid of this, its needed as a key-->
+</div>
+
+<!--RIGHT PROPERTY SHEET-->    <!--href="" data-geo="-->
+<div id="tabs" style="color:white;border:none;margin:0px;padding:0px;position:absolute;right:0px;top:60px;z-index:2000;">
+  <ul  style="color:white;border-top:none;border-left:none;border-right:none;background-color:rgb(90,90,90);">
+    <li style="border:none;"><a href="#tabs-1" style="background-color:rgb(120,120,120);font-size:14px;color:white;">Properties</a></li>
+    <li style="border:none;"><a href="#tabs-2" style="background-color:rgb(120,120,120);font-size:14px;color:white;">History</a></li>
+    <li style="border:none;"><a href="#tabs-3" style="background-color:rgb(120,120,120);font-size:14px;color:white;">Settings</a></li>
+    <li style="border:none;"><a href="#tabs-3" style="background-color:rgb(120,120,120);font-size:14px;color:white;">User</a></li>
+  </ul>
+<div id="tabs1" style="margin:0px;padding:0px;">
+<div style="background-color:rgb(90,90,90);position:absolute;top:38px;margin:0px;"> 
+  
+  <script>
+ let tmplheaderpropsheet = document.querySelector('#headerpropsheet');
+ tabs1.appendChild(tmplheaderpropsheet.content.cloneNode(true));
+ </script>
+	 
+<!--Just make the UL list templates-->
+<!--<ul style="text-decoration:none;list-style-type: none;margin:0px;padding:0px;"> 
+<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;"><span id="selecteditem" style="color:white;padding-left:10px;line-height:3;color:lightgreen;">No Item Selected</span></li> 
+<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;padding-top:5px;"><span style="color:white;padding-left:10px;">W: </span><input type="text" id="setWidth"   value="" style="width:50px;background-color:rgb(70,70,70);color:white;text-align:center;border: thin silver solid;"><span style="color:white;padding-left:10px;">H: </span><input type="text" id="setHeight"   value="" style="width:50px;background-color:rgb(70,70,70);color:white;text-align:center;border: thin silver solid;padding-left:10px;"><button id="btn1"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;" onclick= "pp = $('#setWidth').val();kk = $('#setHeight').val();cc = $('#setBackgroundColor').val();headerStyles(pp,kk,cc);">ok</button><input type='text' id="full"/></li>
+<li id="demo" style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;">Iamge <input type="file" id="jim2"  onchange="$('#headerimage').attr('src',this.files[0].name)" style="font-size:10px;height:26px;" /></li>
+<li id="demo"  style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;"><input type="text" id="setTitle1"   value="Title" style="padding-left:5px;width:260px;background-color:rgb(70,70,70);color:silver;text-align:center;border: thin silver solid;text-align:left;"><button  onclick="document.getElementById('headerslot1').innerHTML = $('#setTitle1').val();"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;">ok</button></li> 
+<li id="demo2" style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;"><input type="text" id="setTitle2"   value="Sub-Title" style="padding-left:5px;width:260px;background-color:rgb(70,70,70);color:silver;text-align:center;border: thin silver solid;text-align:left;"><button  onclick="document.getElementById('headerslot2').innerHTML = $('#setTitle2').val();"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;">ok</button></li>
+<li id="demo3" style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;"><input type="text" id="setTitle3"   value="Button Caption" style="padding-left:5px;width:260px;background-color:rgb(70,70,70);color:silver;text-align:center;border: thin silver solid;text-align:left;"><button  onclick="document.getElementById('headerslot3').innerHTML = $('#setTitle3').val();"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;">ok</button></li> 
+<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;text-align:left;padding-left:10px;padding-top:2px;margin-bottom:2px;"><input type="file" id="jim" onchange="$('#cardimage').attr('src',this.files[0].name)" style="font-size:10px;height:26px;" /></li>
+<li  style="text-align:left;padding-left:10px;background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;"><i class="material-icons md-18 md-light" id="deleteicon" style="padding-top:6px;" onclick = "$( '#' + yy ).remove();document.getElementById('trashcan').innerHTML = 'No Object Selected';document.getElementById('selecteditem').innerHTML = 'No Object Selected' ">delete</i><div id="trashcan" style="font-size:12px;padding-left:10px;line-height:25px;display:inline;margin-bottom:5px;color:white">No Object Selected</div></li>  
+<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:0px;"></li>
+</ul>--> 
+</div>
+</div>
+
+<div id="tabs-2" style="color:white;background-color:rgb(90,90,90)">
+<p>Tab 2 content</p>
+</div>
+  
+<div id="tabs-3" style="color:white;background-color:rgb(90,90,90);font-family:roboto;">
+Tab 3 Content
+</div>
+
+<div id="tabs-4" style="color:white;background-color:rgb(90,90,90);font-family:roboto;">
+Tab 4 Content
+</div>
+
+</div><!--property sheet-->
+
+
+
+<!--MDL GRID-->
+<!--All but top row goes away at < 480 (cell phone width).  Only one column for cell phone form factor.-->
+	
+	<!--Row 1-->	
+	<DIV class="content-grid mdl-grid" id="mdlGrid">
+	<div id="stuff8" class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone tom paul"></div>
+	
+	<!--Row 2-->
+	<div id="stuff9" class="mdl-cell mdl-cell--6-col mdl-cell--hide-phone tom paul" ></div>
+	<div id="stuff10" class="mdl-cell mdl-cell--6-col mdl-cell--hide-phone tom paul"></div>
+	 
+	<!--Row 3-->
+	<div id="stuff"  class="mdl-cell mdl-cell--5-col mdl-cell--hide-phone tom paul" ></div>
+	<div id="stuff2" class="mdl-cell mdl-cell--4-col mdl-cell--hide-phone tom paul"></div>
+	<div id="stuff3" class="mdl-cell mdl-cell--3-col mdl-cell--hide-phone tom paul"></div>
+	
+	<!--Row 4-->
+	<div id="stuff4" class="mdl-cell mdl-cell--5-col mdl-cell--hide-phone tom paul"></div>
+	<div id="stuff5" class="mdl-cell mdl-cell--2-col mdl-cell--hide-phone tom paul"></div>		
+	<div id="stuff6" class="mdl-cell mdl-cell--2-col mdl-cell--hide-phone tom paul"></div>
+	<div id="stuff7" class="mdl-cell mdl-cell--3-col mdl-cell--hide-phone tom paul"></div>
+</div> 
+
+ <!--<fedex-leaderboard></fedex-leaderboard>-->
+ 
+  
+<!--jQuery simple context Menu: https://swisnl.github.io/jQuery-contextMenu/demo.html-->
+<!--http://ignitersworld.com/lab/contextMenu.html-->
+ 
+</div> 
+
+<!--color picker-->
+<script>
+$(".basic").spectrum({
+    color: "#f00",
+    change: function(color) {
+        $("#basic-log").text("change called: " + color.toHexString());
+    }
+});
+
+$("#full").spectrum({
+    color: "#ECC",
+    showInput: true,
+    className: "full-spectrum",
+    showInitial: true,
+    showPalette: true,
+    showSelectionPalette: true,
+    maxSelectionSize: 10,
+    preferredFormat: "hex",
+    localStorageKey: "spectrum.demo",
+    move: function (color) {
+        
+    },
+    show: function () {
+    
+    },
+    beforeShow: function () {
+    
+    },
+    hide: function () {
+    
+    },
+    
+	change: function(color) {     //change is a jquery function.  This sends the selected hex color to the headerStyles function.   
+    cc = color.toHexString();
+	headerStyles(pp,kk,cc);	 
+    },
+    
+	palette: [
+        ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
+        "rgb(204, 204, 204)", "rgb(217, 217, 217)","rgb(255, 255, 255)"],
+        ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)",
+        "rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"], 
+        ["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)", 
+        "rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)", 
+        "rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)", 
+        "rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)", 
+        "rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)", 
+        "rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)",
+        "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+        "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)",
+        "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)", 
+        "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
+    ]
+});
+
+</script>
+
+<style>
+.full-spectrum .sp-palette {
+max-width: 200px;
+}
+</style>
+ 
+</body>
+</html>
+
+
+
+
