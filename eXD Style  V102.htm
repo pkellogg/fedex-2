@@ -15,6 +15,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="material.js"></script>
+<script src="ds-ide.js"></script><!--jquery MUST COME FIRST-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
 <!--<script src="//storage.googleapis.com/code.getmdl.io/1.0.1/material.min.js"></script>-->
 
@@ -33,278 +34,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
 
-
 <!--web components polyfill works with ie 11-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.1.0/webcomponents-lite.js"></script>
-
-<!--script for header component-->
-<!--<script defer src="main.js"></script>-->
+</head>
 
 
-<!--MDL was commented out because it made everyting very slow-->  
-<!--google material lite    https://getmdl.io/started/index.html#download-->
-<!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.orange-green.min.css">
-<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>-->
-
-<!--CSS-->
-<!--default text is roboto 18px-->
-<!--Notes:  IMPORTATNT: You must give an element left and top relative position in its style in order to make it draggable
-Do NOT give an element an initial drop position. Also, the styling for the individual components is in the templates-->
-
-
- 
-<!--yy is a global that is set when a user double clicks an object...which displays the id of the selected object
-in the property sheet and then the user selects the delete button and that button uses yy and remove(0 to make it happen.-->
-<!--UTILITY CODE--> 
-<script>
-<!--called by the ok button in the properties dialog box hard wired for header element only--> 
- function elementStyle(x, y , z, aa) {
-//alert(aa);
-if(aa == 'fxheaderid'){
-var gg = "fedex-header";
-}
-
-if(aa == 'fxcardid'){
-var gg = "fedex-card";
-}
-document.getElementsByTagName(gg)[0].setAttribute("c", z);
-document.getElementsByTagName(gg)[0].setAttribute("width", x); 
-document.getElementsByTagName(gg)[0].setAttribute("height", y); 	
-}
-  
-$( function() {
-    $( "#tabs" ).tabs();
-  } );
-
-//Called from inline script in each element with a doubleclick on the object  
-function myFunction(xx) {
-    document.getElementById("trashcan").innerHTML = $(xx).attr('id');
-	document.getElementById("selecteditem").innerHTML = "<span style='color:white;'>Selected Item ID:</span>" + " " + $(xx).attr('id');
-	yy = null;
-	  yy = $(xx).attr('id');
-	  uu = document.getElementById('trashcan').innerText;
-	 //document.getElementById(yy).style.border = 'medium dotted green';
-	  
-}
-//called from clicking the ok button in the size property sheet
-//yy = selected item coming from myFunction
-function setsize(pp , kk){
-//$("#fxheaderid").width(tt);
-$( '#' + yy ).width(pp);
-$( '#' + yy ).height(kk);
-oo =  yy;
- 
-//document.getElementById("fxheaderid").style.border = "none";
-document.getElementById(oo).style.border = "none";
- 
-}
-</script>
-
-
-<script type="text/javascript">
-
-(function( $ ) {
-    'use strict';
-})( jQuery );     //protects the jquery shorthand selector $ namespace from other who use it 
-
-var droptarget  //declares a global variable.  It must be declared outside a function to be global 
-var mdlGrid
-
-function buildGrid(){
-//$("body").append('<DIV class="content-grid mdl-grid" id="mdlGrid"><div id="stuff8" class="mdl-cell mdl-cell--12-col tom paul"></div><div id="stuff9" class="mdl-cell mdl-cell--6-col tom paul" ></div><div id="stuff10" class="mdl-cell mdl-cell--6-col tom paul"></div><div id="stuff"  class="mdl-cell mdl-cell--5-col tom paul" ></div><div id="stuff2" class="mdl-cell mdl-cell--4-col tom paul"></div><div id="stuff3" class="mdl-cell mdl-cell--3-col tom paul"></div><div id="stuff4" class="mdl-cell mdl-cell--5-col tom paul"></div><div id="stuff5" class="mdl-cell mdl-cell--2-col tom paul"></div><div id="stuff6" class="mdl-cell mdl-cell--2-col tom paul"></div><div id="stuff7" class="mdl-cell mdl-cell--3-col tom paul"></div>');
-location.reload();
-} 
-
-function grid(){
-if($('#gridCheck').prop('checked'))
-{
-buildGrid();
-}
-else
-{
-mdlGrid = $('#mdlGrid').remove();
-}
-
-}
-
-function changeImage(xx) {
-var xxx = document.getElementById("jim").files[0].name; //use this format to get rid of filepath secruity measure
-$(xx).attr("src",xxx);
-}  
-  
-
-function toggleDisplay(divId) {
- $("#"+divId).toggle();
-}
-
-//TOOLTIPS
- //$( function() {
-
-     //$( document ).tooltip();
-
-   //} );
-
-/*$( function() {
-
-    $( document ).tooltip({
-		items: "img, [data-geo], [title]",
-		content: function() {
-		var element = $( this );
-		if ( element.is( "[data-geo]" ) ) {
-			return "<img src='header.png'><br/><div style='font-size:12px;padding:10px;);'>This is a header.  It's a new HTML 5 tag and can be used in any section on the page. While it's most often used at the top of a section, it can be used within the body of a section. Click on the text to add your own title.</div>";
-			}
-		}
-	});
-	} );*/
-	
-//jQUERY MENU
-$( function() {
-
-    $( "#menu" ).menu();
-
-  } );
-  
-var timeout    = 500;
-var closetimer = 0;
-var ddmenuitem = 0;
-
-function jsddm_open()
-{  jsddm_canceltimer();
-   jsddm_close();
-   ddmenuitem = $(this).find('ul').css('visibility', 'visible');}
-
-function jsddm_close()
-{  if(ddmenuitem) ddmenuitem.css('visibility', 'hidden');}
-
-function jsddm_timer()
-{  closetimer = window.setTimeout(jsddm_close, timeout);}
-
-function jsddm_canceltimer()
-{  if(closetimer)
-   {  window.clearTimeout(closetimer);
-      closetimer = null;}}
-
-$(document).ready(function()
-{  $('#jsddm > li').bind('mouseover', jsddm_open)
-   $('#jsddm > li').bind('mouseout',  jsddm_timer)});
-
-document.onclick = jsddm_close;
-
-$( init );
-
-
-
-
-
-
-
-function init() {
-
-$('#headericon').draggable( {
- cursor: 'move',
- helper:headerHelper
-  })
-  
-  $('#buttonicon').draggable( {
- cursor: 'move',
- helper:buttonHelper
-  })
-  
-$('#switchicon').draggable( {
- cursor: 'move',
- helper:mdlSwitchHelper
-  })
-  
-  $('#slidericon').draggable( {
- cursor: 'move',
- helper:mdlSliderHelper
-  })
-  
-  $('#squarecardicon').draggable( {
- cursor: 'move',
- helper:SquareCardHelper
-  })
-  
-  $('#textareaicon').draggable( {
- cursor: 'move',
- helper:textAreaHelper
-  })
-  
-$('#paragraphicon').draggable( {
- cursor: 'move',
- helper:paragraphHelper
-  })
-  
-$('#checkboxicon').draggable( {
- cursor: 'move',
- helper:checkboxHelper
-  })
-  
-  $('#radioicon').draggable( {
- cursor: 'move',
- helper:radioHelper
-  })
-  
-  $('#tableicon').draggable( {
- cursor: 'move',
- helper:tableHelper
-  })
-  
-   $('#dropmenuicon').draggable( {
- cursor: 'move',
- helper:dropMenuHelper
-  })
-  
-  $('#navlisticon').draggable( {
-	cursor: 'move',
-	helper:navlistHelper
-	})
-  
-$('#leaderboardicon').draggable( {
-	cursor: 'move',
-	helper:navlistHelper
-	})
-
-	
-//GET ID OF DROP TARGET AND HIGHLIGHT DROPTARGET BORDER IN RED 
- $(function() {
-$("body").droppable({
-     over: function(event, ui) {
-     $('#display').html( 'body' );
-     droptarget =  document.getElementById('display').innerHTML;
-	 }
-});
-}); 
-
-//OVER 
-$(function() {
-$(".mdl-cell").droppable({
-     over: function(event, ui) {
-	 
-     $('#display').html( this.id ).prepend("#");
-       droptarget =  document.getElementById('display').innerHTML;
-	 nn = this.id;
-	 document.getElementById(nn).style.border = "thin red solid";
-	  
-}
-});
-});
-
-//OUT 
-$(function() {
-$(".mdl-cell").droppable({
-     out: function(event, ui) {
-	 nn = this.id;
-	 document.getElementById(nn).style.border = "thin gray solid";
-	 }
-});
-});  
-$('body').droppable({drop: handleDropEvent});
-} 
-</script>
-<!--END UTILITY SCRIPTS-->
-
+<body> <!--BEGIN BODY-->
 <!----------------------------------------------------COMPONENTS--------------->
 <!--NOTE: the style for the component must be included in the template for the component and the componenet
 itself must have a matching class-->
@@ -376,7 +111,6 @@ img {
 	}
 	
 ul {margin:0px;}
- 
 </style>
 
 <div class="fxcardclass" style="position:relative;">
@@ -396,6 +130,13 @@ customElements.define('fedex-card', class extends HTMLElement {
       shadowRoot.appendChild(tmplcard.content.cloneNode(true));
 	}
 });
+
+
+
+
+
+
+
 </script>
 <!--END CARD-->
 
@@ -711,6 +452,29 @@ customElements.define('fedex-navlist', class extends HTMLElement {
       shadowRoot.appendChild(tmplnavlist.content.cloneNode(true));
 	}
 });
+
+if ($(draggable).attr('id') == "navlisticon") { 
+olddropbutton = droptarget;
+$(droptarget).append('<fedex-navlist id="fxnavlistid" class="fxnavlistclass" ondblclick="myFunction(fxnavlistid)"  ></fedex-navlist>');
+$(".fxnavlistclass").resizable();
+$(".fxnavlistclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+}
+
+if ($(draggable).attr('id') == "fxnavlistid" && olddropbutton != droptarget) 
+{ 
+$(ui.draggable).remove();
+$(droptarget).append('<fedex-navlist id="fxnavlistid" ondblclick="myFunction(fxnavlistid)" class="fxnavlistclass"></fedex-navlist>');
+ 
+$(".fxnavlistclass").resizable();
+$(".fxnavlistclass").draggable( {
+	containment: "window",   
+	cursor: 'move'  
+});
+olddropbutton = droptarget;
+} 
 </script>
 <!--END SECONDARY MENU-->
 
@@ -799,10 +563,7 @@ customElements.define('fedex-navlist', class extends HTMLElement {
     transition: max-height 0.2s ease-out;
 }
 </style>
- 
-	
-<!--https://github.com/lugolabs/circles-->
-	<script src="circles.min.js"></script><!--this has to be external of template-->
+<script src="circles.min.js"></script><!--this has to be external of template-->
 
  
 <script>
@@ -1050,50 +811,17 @@ function drawBasic() {
 <script>
 customElements.define('fedex-leaderboard', class extends HTMLElement {
 connectedCallback() {
-				//this.innerHTML = "<b>This is an notice that fedex-leaderboard has been added to the DOM</b>";
-				//shadowRoot.appendChild(tmpl.content.cloneNode(true));
 this.appendChild(fedexleaderboard.content.cloneNode(true));  //this works
 }
 });
-
-//this is leaderboard as a component in the shadow dom (functionality is lost because it cant reach the script links
-//fedex leaderboard  
-
-/*let tmplleaderboard = document.querySelector('#fedexleaderboard');
-customElements.define('fedex-leaderboard', class extends HTMLElement {
-	constructor() {
-      super();  
-      let shadowRoot = this.attachShadow({mode: 'open'});
-      shadowRoot.appendChild(tmplleaderboard.content.cloneNode(true));
-  
-  }
-});*/
- 
-//Removed from menu:  But this is format to create a custom element rather than component
-//var XFooProto = Object.create(HTMLElement.prototype);
-//XFooProto.createdCallback = function() {
-//this.innerHTML = '<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown button</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a></div</div>'
-//};
-//var XFoo = document.registerElement('x-foo-with-markup', {prototype: XFooProto});
-
 </script>
 <!--END LEADERBOARD-->
 
 <!--END COMPONENTS-->
  
 
-
-
-
-
-
- 
-
-
-
+<!--BEGIN DROP OPERATIONS PER COMPONENT--> 
 <script>
-//BEGIN ELEMENT AND COMPONENT DEFINITIONS 
-
 //CARD (NEW) 
 //BEGIN DROP FUNCTION 
 function handleDropEvent( event, ui ) {
@@ -1129,7 +857,7 @@ $(".fxcardclass").draggable( {
 	cursor: 'move'  
 });
 olddropbutton = droptarget;
-} 
+}   
  
 //FEDEX HEADER 
 //THIS WORKS.  SETTING STYLE USING REFLECTED PROPERTIES/ATTRIBUTES AND EXTERNAL STYLE SHEET. 
@@ -1376,29 +1104,6 @@ olddropbutton = droptarget;
 //FEDEX BOX MENU COMPONENT 
 //Does  not read the Bootstrap CSS link because its encapsulated.  Use a custom element instead. 
 
-if ($(draggable).attr('id') == "navlisticon") { 
-olddropbutton = droptarget;
-$(droptarget).append('<fedex-navlist id="fxnavlistid" class="fxnavlistclass" ondblclick="myFunction(fxnavlistid)"  ></fedex-navlist>');
-$(".fxnavlistclass").resizable();
-$(".fxnavlistclass").draggable( {
-	containment: "window",   
-	cursor: 'move'  
-});
- 
-}  
-if ($(draggable).attr('id') == "fxnavlistid" && olddropbutton != droptarget) 
-{ 
-$(ui.draggable).remove();
-$(droptarget).append('<fedex-navlist id="fxnavlistid" ondblclick="myFunction(fxnavlistid)" class="fxnavlistclass"></fedex-navlist>');
- 
-$(".fxnavlistclass").resizable();
-$(".fxnavlistclass").draggable( {
-	containment: "window",   
-	cursor: 'move'  
-});
-olddropbutton = droptarget;
-} 
-
 
 //FEDEX LEADERBOARD 
  
@@ -1442,9 +1147,7 @@ function navlistHelper( event)  {  return '<i class="material-icons md-36" id="n
 function leaderboardHelper( event)  {  return '<i class="material-icons md-36" id="leaderboardicon">face</i><BR>';}
 
 </script>
-</head>
- 
-<body  > <!--BEGIN BODY-->
+
 <!--HEADER & MAIN MENU BAR-->
 <div style="background-color:rgb(77,20,140);height:60px;">
 <i  class="material-icons md-36 fedexorange" onclick = "toggleDisplay('iconMenu');" style="position:absolute;top:18px;left:8px;">view_headline</i> 
@@ -1499,12 +1202,10 @@ function leaderboardHelper( event)  {  return '<i class="material-icons md-36" i
 	<i class="material-icons md-18 md-light" id="navlisticon">chrome_reader_mode</i><br /><span style="color:white;font-size:12px;"></span><BR>
 	<i class="material-icons md-18 md-light" id="leaderboardicon">face</i><br /><span style="color:white;font-size:12px;"></span><BR>
 	
-	<!--<i class="material-icons md-18 md-light" id="paragraphicon">link</i><br /><span style="color:white;font-size:12px;">Link</span><BR>--> 
-	<!--<i class="material-icons md-36" id="slidericon">keyboard</i><BR>-->
-	<span id="display" style="padding-left:10px;color:white;font-size:14px;"></span><!--you can't get rid of this, its needed as a key-->
+	 <span id="display" style="padding-left:10px;color:white;font-size:14px;"></span><!--you can't get rid of this, its needed as a key-->
 </div>
 
-<!--RIGHT PROPERTY SHEET-->    <!--href="" data-geo="-->
+<!--RIGHT PROPERTY SHEET-->     
 <div id="tabs" style="color:white;border:none;margin:0px;padding:0px;position:absolute;right:0px;top:60px;z-index:2000;">
   <ul  style="color:white;border-top:none;border-left:none;border-right:none;background-color:rgb(90,90,90);">
     <li style="border:none;"><a href="#tabs-1" style="background-color:rgb(120,120,120);font-size:14px;color:white;">Properties</a></li>
@@ -1528,28 +1229,6 @@ function leaderboardHelper( event)  {  return '<i class="material-icons md-36" i
 </div>
 </div><!--template ends here-->
  
-  
-  <script>
-  
-  //let tmplheaderpropsheet = document.querySelector('#headerpropsheet');
-  //tabs1.appendChild(tmplheaderpropsheet.content.cloneNode(true));
-  
- </script>
-	 
-<!--Just make the UL list templates-->
-<!--<ul style="text-decoration:none;list-style-type: none;margin:0px;padding:0px;"> 
-<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;"><span id="selecteditem" style="color:white;padding-left:10px;line-height:3;color:lightgreen;">No Item Selected</span></li> 
-<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;padding-top:5px;"><span style="color:white;padding-left:10px;">W: </span><input type="text" id="setWidth"   value="" style="width:50px;background-color:rgb(70,70,70);color:white;text-align:center;border: thin silver solid;"><span style="color:white;padding-left:10px;">H: </span><input type="text" id="setHeight"   value="" style="width:50px;background-color:rgb(70,70,70);color:white;text-align:center;border: thin silver solid;padding-left:10px;"><button id="btn1"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;" onclick= "pp = $('#setWidth').val();kk = $('#setHeight').val();cc = $('#setBackgroundColor').val();headerStyles(pp,kk,cc);">ok</button><input type='text' id="full"/></li>
-<li id="demo" style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;">Iamge <input type="file" id="jim2"  onchange="$('#headerimage').attr('src',this.files[0].name)" style="font-size:10px;height:26px;" /></li>
-<li id="demo"  style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;"><input type="text" id="setTitle1"   value="Title" style="padding-left:5px;width:260px;background-color:rgb(70,70,70);color:silver;text-align:center;border: thin silver solid;text-align:left;"><button  onclick="document.getElementById('headerslot1').innerHTML = $('#setTitle1').val();"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;">ok</button></li> 
-<li id="demo2" style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;"><input type="text" id="setTitle2"   value="Sub-Title" style="padding-left:5px;width:260px;background-color:rgb(70,70,70);color:silver;text-align:center;border: thin silver solid;text-align:left;"><button  onclick="document.getElementById('headerslot2').innerHTML = $('#setTitle2').val();"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;">ok</button></li>
-<li id="demo3" style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;padding-left:10px;padding-top:5px;"><input type="text" id="setTitle3"   value="Button Caption" style="padding-left:5px;width:260px;background-color:rgb(70,70,70);color:silver;text-align:center;border: thin silver solid;text-align:left;"><button  onclick="document.getElementById('headerslot3').innerHTML = $('#setTitle3').val();"  style="background-color:rgb(70,70,70);color:white;border:none;margin-left:10px;margin-right:10px;">ok</button></li> 
-<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;text-align:left;padding-left:10px;padding-top:2px;margin-bottom:2px;"><input type="file" id="jim" onchange="$('#cardimage').attr('src',this.files[0].name)" style="font-size:10px;height:26px;" /></li>
-<li  style="text-align:left;padding-left:10px;background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:2px;text-align:left;"><i class="material-icons md-18 md-light" id="deleteicon" style="padding-top:6px;" onclick = "$( '#' + yy ).remove();document.getElementById('trashcan').innerHTML = 'No Object Selected';document.getElementById('selecteditem').innerHTML = 'No Object Selected' ">delete</i><div id="trashcan" style="font-size:12px;padding-left:10px;line-height:25px;display:inline;margin-bottom:5px;color:white">No Object Selected</div></li>  
-<li style="background-color:rgb(120,120,120);width:322px;color:white;height:35px;margin-bottom:0px;"></li>
-</ul>--> 
-< 
-
 <div id="tabs-2" style="color:white;background-color:rgb(90,90,90)">
 <p>Tab 2 content</p>
 </div>
@@ -1563,8 +1242,6 @@ Tab 4 Content
 </div>
 
 </div><!--property sheet-->
-
-
 
 <!--MDL GRID-->
 <!--All but top row goes away at < 480 (cell phone width).  Only one column for cell phone form factor.-->
@@ -1588,16 +1265,10 @@ Tab 4 Content
 	<div id="stuff6" class="mdl-cell mdl-cell--2-col mdl-cell--hide-phone tom paul"></div>
 	<div id="stuff7" class="mdl-cell mdl-cell--3-col mdl-cell--hide-phone tom paul"></div>
 </div> 
-
- <!--<fedex-leaderboard></fedex-leaderboard>-->
- 
-  
-<!--jQuery simple context Menu: https://swisnl.github.io/jQuery-contextMenu/demo.html-->
-<!--http://ignitersworld.com/lab/contextMenu.html-->
- 
 </div> 
 
-<!--color picker-->
+</body>
+<!--color picker script can't be external because its a component-->
 <script>
 $(".basic").spectrum({
     color: "#f00",
@@ -1651,16 +1322,8 @@ $("#full").spectrum({
         "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
     ]
 });
-
 </script>
 
-<style>
-.full-spectrum .sp-palette {
-max-width: 200px;
-}
-</style>
- 
-</body>
 </html>
 
 
