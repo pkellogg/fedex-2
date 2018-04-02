@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>External Component from external script: this is it</title>
+<!--web components polyfill works with ie 11-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.1.0/webcomponents-lite.js"></script>
+<script src="main.js"></script> <!--component api-->
+</head>
+  
+<body>
+<!--<template id="element-details-template"></template>-->
+<custom-square w="800" l="100" c="tomato"></custom-square><!--custom component with attributes that set properties-->
+</body>
+</html>
