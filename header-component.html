@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<!--API: fedex-header|| properties & attributes: h_width, h_height, h_backgroundcolor,h_border-->
+
+<head>
+<meta charset="utf-8">
+<title>Header Component from external script</title>
+<!--web components polyfill works with ie 11-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.1.0/webcomponents-lite.js"></script>
+<script src="header-component-script.js"></script> <!--component api-->
+</head>
+  
+<body>
+<!--<template id="element-details-template"></template>-->
+<fedex-header h_width="800" h_height="100" h_backgroundcolor="slateblue" h_border="thick solid silver"></fedex-header> 
+</body>
+</html>
