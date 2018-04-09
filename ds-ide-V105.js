@@ -11,13 +11,24 @@ var gg = "fedex-header";   //tag name
 if(fxselelement == 'fxcardid'){     //id
 var gg = "fedex-card";   //tag name
 }
- //alert(selectedBackColor);
+ //Attributes
 document.getElementsByTagName(gg)[0].setAttribute("width", fxwidth);
 document.getElementsByTagName(gg)[0].setAttribute("height", fxheight);
 document.getElementsByTagName(gg)[0].setAttribute("c", cc);
 }
- 
 
+function elementEditSlots(ss, nn)  //ss = this
+{
+	 
+if(nn == 'fxheaderid'){     //id
+$('#headerimage').attr('src',ss.files[0].name)
+}
+
+if(nn == 'fxcardid'){     //id
+$('#cardimage').attr('src',ss.files[0].name)
+}
+}
+	
 $( function() {
     $( "#tabs" ).tabs();
   } );
