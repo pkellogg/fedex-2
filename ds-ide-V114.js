@@ -72,6 +72,7 @@ $( function() {
 //SELECTIONS
 //Called from inline script in each element with a doubleclick on the object  
 function myFunction(xx) {
+	//alert(xx);
     document.getElementById("trashcan").innerHTML = $(xx).attr('id');
 	document.getElementById("selecteditem").innerHTML = "<span style='color:white;'>Selected Item ID:</span>" + " " + $(xx).attr('id');
 	yy = null;
