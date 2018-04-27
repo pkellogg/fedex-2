@@ -4,10 +4,12 @@
 //called by the ok button in property sheet.  This also uses the global cc which is the color selected from the picker
 
 //ATTRIBUTES
-function elementStyle(fxwidth,fxheight,fxbackcolor,fxselelement) { 
+function elementStyle(fxwidth,fxheight,fxbackcolor,fxzindex,fxselelement) { 
+//alert("pat");
 document.getElementById(fxselelement).setAttribute("width", fxwidth);
 document.getElementById(fxselelement).setAttribute("height", fxheight);
 document.getElementById(fxselelement).setAttribute("c", cc);
+document.getElementById(fxselelement).setAttribute("layer", fxzindex);
 }
 
 //TABS	
@@ -16,9 +18,9 @@ $( function() {
   } );
 
 //SELECTIONS
-//Called from inline script in each element with a doubleclick on the object  
+//Called from inline script in each element with a click on the object  
 function myFunction(xx) {
-	
+	//alert($(xx).attr('id'));
     document.getElementById("trashcan").innerHTML = $(xx).attr('id');
 	 
 	document.getElementById("selecteditem").innerHTML = "<span style='color:white;'>Selected Item ID:</span>" + " " + $(xx).attr('id');
@@ -32,7 +34,7 @@ function myFunction(xx) {
 //yy = selected item coming from myFunction
 function setsize(pp , kk){
 //$("#fxheaderid").width(tt);
-alert("setsize");
+//alert("setsize");
 $( '#' + yy ).width(pp);
 $( '#' + yy ).height(kk);
 oo =  yy;
