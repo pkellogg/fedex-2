@@ -9,12 +9,12 @@
   }
 </script>
 
-<link rel="import" href="wed3.html">
+<link rel="import" href="combined.html">
 </head>
 
 <body>
 
-<fedex-header id="expressHeader" class="fxheaderclass" width=1000 height=90 c=green layer=.5 trans=1 x=200 y=350> 
+<fedex-header id="expressHeader" class="fxheaderclass" width=1000 height=90 c=green layer=1 trans=1 x=100 y=350> 
 <span id="headerimage" slot="header-image"><img src="happy.jpg" style="max-height: 100%; max-width: 100%;" /></span> 
 
 <span id="headerslot1" slot="element-name"style="color:tan;position:absolute;left:200px;top:20px;">FedEx World Wide Serivce</span> 
@@ -24,4 +24,18 @@
 <button type="button" id="headerslot3"  slot="button-slot" style="line-height:2;color:white;font-size:16px;height:40px;width:140px;background-color:transparent;float:right;margin-right:20px;margin-top:25px;margin-bottom:10px;">Explore</button> 
 
 </fedex-header>
+
+
+<fedex-card id="expressCard" class="fxcardclass" width=300 height=400 c=slateblue layer=2 trans=1 x=200 y=500> 
+ 
+<span id="cardimage" slot="card-image"><img src="walmart.jpg" style="max-height: 100%; max-width: 100%;" /></span>
+
+<span id="cardslot1" slot="element-name" style="color:black;margin-left:30px;">Enter Title<br /></span>
+
+<span id="cardslot2" slot="element-name2" style="color:black;margin-left:30px;">Enter Sub-Title</span>
+
+<button type="button" id="cardslot3"  slot="button-slot" style="line-height:2;color:white;font-size:16px;height:40px;width:140px;position:absolute;right:20px;bottom:20px;background-color:transparent;">Enter Caption</button>
+
+</fedex-card>
 </body>
+ 

@@ -1,0 +1,28 @@
+<head>
+
+<script>
+  function handleLoad(e) {
+    console.log('Loaded import: ' + e.target.href);
+  }
+  function handleError(e) {
+    console.log('Error loading import: ' + e.target.href);
+  }
+</script>
+
+<link rel="import" href="friday.html">
+</head>
+
+<body>
+
+<fedex-card id="expressCard" class="fxcardclass" width=300 height=400 c=slateblue layer=2 trans=1 x=200 y=450> 
+ 
+<span id="cardimage" slot="card-image"><img src="pilot.jpg" style="max-height: 100%; max-width: 100%;" /></span>
+
+<span id="cardslot1" slot="element-name" style="color:black;margin-left:30px;">Enter Title<br /></span>
+
+<span id="cardslot2" slot="element-name2" style="color:black;margin-left:30px;">Enter Sub-Title</span>
+
+<button type="button" id="cardslot3"  slot="button-slot" style="line-height:2;color:white;font-size:16px;height:40px;width:140px;position:absolute;right:20px;bottom:20px;background-color:transparent;">Enter Caption</button>
+
+</fedex-card>
+</body>
