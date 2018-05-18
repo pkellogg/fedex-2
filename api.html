@@ -236,64 +236,70 @@ nav.vertical li:hover > ul{
 <p style="font-size:16px;color:gray;">Cards are a fairly new feature in user interfaces, and allow users an access point to more complex and detailed information. Their design and use is an important factor in the overall user experience.</p>
 </div><!--row 1 end-->
 
+
+<!--note: background color is set in the script for the color picker at the bottom of this page.  It happens when user picks a new color from the color dialog-->
 <!--Row 2-->
-<div id="stuff9" class="mdl-cell mdl-cell--6-col" style="padding:30px;">
+<div id="stuff9" class="mdl-cell mdl-cell--4-col" style="padding:30px;">
 <span style="font-size:24px;font-face:bold;">Properties</span><br />
 
-<table style="margin-top:20px;margin-bottom:5px;">
+<table style="margin-top:20px;margin-bottom:5px;border-collapse:separate; border-spacing:5px;">
 
 <!--width-->
 <tr>
 <td><span style="color:black;padding-left:10px;">Width: </td>
-<td><input id = "sliderWidth" class = "mdl-slider mdl-js-slider" type = "range" min = "200" max = "300" value = "25" tabindex = "0" 
-oninput = "showMessage(this.value , 'setWidth')" onchange = "showMessage(this.value, 'setWidth')"></td>
+<td><input id = "sliderWidth" class = "mdl-slider mdl-js-slider" type = "range" min = "200" max = "700" value = "25" tabindex = "0" 
+oninput = "showMessage(this.value , 'setWidth')" 
+
+onchange = "showMessage(this.value , 'setWidth');fxwidth = $('#sliderWidth').val();document.getElementById('expressCard').setAttribute('width', fxwidth)"></td>
 <td><input type=text id="setWidth" style="width:50px;color:black;text-align:center;border: thin silver solid;" /></td>
 </tr>
 
 <!--height-->
 <tr>
 <td><span style="color:black;padding-left:10px;">Height: </td>
-<td><input id = "sliderHeight" class = "mdl-slider mdl-js-slider" type = "range" min = "200" max = "500" value = "25" tabindex = "0" 
-oninput = "showMessage(this.value , 'setHeight')" onchange = "showMessage(this.value , 'setHeight')"></td>
+<td><input id = "sliderHeight" class = "mdl-slider mdl-js-slider" type = "range" min = "200" max = "700" value = "25" tabindex = "0" 
+oninput = "showMessage(this.value , 'setHeight')" 
+
+onchange = "showMessage(this.value , 'setHeight');fxheight = $('#sliderHeight').val();document.getElementById('expressCard').setAttribute('height', fxheight)"></td>
 <td><input type=text id="setHeight" style="width:50px;color:black;text-align:center;border: thin silver solid;" /></td>
 </tr>
 
 <!--left-->
-<tr>
+<!--<tr>
 <td><span style="color:black;padding-left:10px;">Left: </td>
 <td><input id = "sliderLeft" class = "mdl-slider mdl-js-slider" type = "range" min = "0" max = "1000" value = "25" tabindex = "0" 
 oninput = "showMessage(this.value , 'setLeft')" onchange = "showMessage(this.value , 'setLeft')"></td>
 <td><input type=text id="setLeft" style="width:50px;color:black;text-align:center;border: thin silver solid;" /></td>
-</tr>
+</tr>--> 
 
 <!--top-->
-<tr>
+<!--<tr>
 <td><span style="color:black;padding-left:10px;">Top: </td>
 <td><input id = "sliderTop" class = "mdl-slider mdl-js-slider" type = "range" min = "0" max = "1200" value = "25" tabindex = "0" 
 oninput = "showMessage(this.value , 'setTop')" onchange = "showMessage(this.value , 'setTop')"></td>
 <td><input type=text id="setTop" style="width:50px;color:black;text-align:center;border: thin silver solid;" /></td>
-</tr>
+</tr>--> 
 
 <!--layer (z-index)-->
 <tr>
 <td><span style="color:black;padding-left:10px;">Layer: </td>
 <td><input id = "sliderLayer" class = "mdl-slider mdl-js-slider" type = "range" min = "0" max = "4000" value = "25" tabindex = "0" 
-oninput = "showMessage(this.value , 'setLayer')" onchange = "showMessage(this.value , 'setLayer')"></td>
+oninput = "showMessage(this.value , 'setLayer')" 
+onchange = "showMessage(this.value , 'setLayer');fxzindex = $('#sliderLayer').val();elementStyle(fxzindex)"></td>
 <td><input type=text id="setLayer" style="width:50px;color:black;text-align:center;border: thin silver solid;" /></td>
 </tr>
-
-
 
 <!--opacity-->
 <tr>
 <td><span style="color:black;padding-left:10px;">Opacity: </td>
-<td><input id = "sliderOpacity" class = "mdl-slider mdl-js-slider" type = "range" min = "0" max = "10" value = "25" tabindex = "0" 
-oninput = "showMessage(this.value , 'setOpacity')" onchange = "showMessage(this.value , 'setOpacity')"></td>
+<td><input id = "sliderOpacity" class = "mdl-slider mdl-js-slider" type = "range" min = "0" max = "1" step = "0.1" value = "1" tabindex = "0" 
+oninput = "showMessage(this.value , 'setOpacity')" 
+onchange = "showMessage(this.value , 'setOpacity');fxopacity = $('#sliderOpacity').val();document.getElementById('expressCard').setAttribute('trans', fxopacity)"></td>
 <td><input type=text id="setOpacity" style="width:50px;color:black;text-align:center;border: thin silver solid;" /></td>
 </tr>
 </table> 
 
-<span style="color:black;padding-left:10px;margin-right:110px;margin-top:15px;">Background Color:</span><input type='text' id="full"/> 
+<span style="color:black;padding-left:10px;margin-right:60px;margin-top:15px;">Background Color:</span><input type='text' id="full"/> 
 
 <form action = "#" style="padding:10px;"><span style="color:black;">Background Image:</span>
 <label for="image_uploads"  style="font-size:10pz;text-decoration:underline;color:silver;cursor:pointer;margin-left:0px;">Select</label><input type="file" id="image_uploads" name="image_uploads" style="font-size:10px;opacity:0;">
@@ -331,12 +337,14 @@ oninput = "showMessage(this.value , 'setOpacity')" onchange = "showMessage(this.
 
 </div><!--Row 2 left column end-->
 
+
+<!---------------------------------------------------This is the card element declarative html------------------------------>
 <!--row 2 right column This is the custom element/component sample-->
-<div id="stuff10" class="mdl-cell mdl-cell--6-col">
+<div id="stuff10" class="mdl-cell mdl-cell--8-col">
 
 <fedex-card id="expressCard" class="fxcardclass" width=100% height=350 c=slateblue layer=2 trans=1 x=0 y=0> 
  
-<slot><img src="car.jpg" style="width: 100%; height:100%;filter: contrast(20%) brightness(150%);" /></slot>
+<slot id="setTitle4"><img src="car.jpg" style="width: 100%; height:100%;filter: contrast(20%) brightness(150%);" /></slot>
 
 <slot><span style="position:absolute;left:20px;top:15px;z-index:10;font-family:roboto;font-size:75px;color:rgb(77,20,140);font-weight:bold;">Fed<span style="color:rgb(255,102,0)">Ex</span><br /><span style="color:rgb(77,20,140);font-family:roboto;font-size:28px;font-weight:bold;top:30px;">Station: OLV</span></slot> 
 
@@ -392,7 +400,8 @@ $("#full").spectrum({
     },
     
 	change: function(color) {     //change is a jquery function.  
-    cc = color.toHexString(); //all we do is use to color picker to set a global variable for elementStyle()
+    cc = color.toHexString();
+    document.getElementById('expressCard').setAttribute('c', cc);           //set a global variable for elementStyle()
 	},
     
 	palette: [
@@ -449,9 +458,11 @@ $(function(){       //activated with the onchange event from the choose file but
  
 $("#image_uploads").change(function(e){ 
 hkhk = this.files[0].name;
+ 
 var str1 =  '"';
 var str2 =' " ';
-var res = str1 +  hkhk  + str2;
+var res = str1 +  hkhk  + str2; 
+alert(res);
 document.getElementById('setTitle4').value =  res ;
 });
 })
