@@ -1,0 +1,51 @@
+<!--CARD-->
+<template id="fedexcard">
+<div class="fxcardclass" style="position:relative;">
+<slot></slot>
+<slot></slot>
+<slot></slot>
+<slot></slot> 
+<slot></slot>
+</div>
+</template>
+
+<script>
+let tmpl = document.currentScript.ownerDocument.querySelector('#fedexcard'); //unique for imports only
+customElements.define('fedex-card', class extends HTMLElement {   
+static get observedAttributes() {return ['width', 'height', 'c', 'layer', 'trans', 'x', 'y' ]; }
+constructor() {
+      super(); 
+	  let shadowRoot = this.attachShadow({mode: 'open'});  
+	  shadowRoot.appendChild(tmpl.content.cloneNode(true));
+	  var style = document.createElement('style'); 
+      shadowRoot.appendChild(style);
+} //constructor
+
+connectedCallback() {
+updateStyleCard(this);   
+}   
+
+attributeChangedCallback(name, oldValue, newValue) {
+updateStyleCard(this);
+}
+
+})
+
+function updateStyleCard(elem) {   
+  var shadow = elem.shadowRoot;
+  var childNodes = shadow.childNodes;
+  for(var i = 0; i < childNodes.length; i++) {
+    if(childNodes[i].nodeName === 'STYLE') {   //building the inline element style
+      childNodes[i].textContent = '.fxcardclass {' +
+						  ' width: ' + elem.getAttribute('width') + 'px;' +     
+                          ' height: ' + elem.getAttribute('height') + 'px;' +
+                          ' background-color: ' + elem.getAttribute('c') + ';' +  
+						  ' z-index: ' + elem.getAttribute('layer') + ';' +  
+						  ' opacity: ' + elem.getAttribute('trans') + ';' +				  
+                          ' left: ' + elem.getAttribute('x') + 'px;' + 
+                          ' top: '  + elem.getAttribute('y') + 'px;' +  '}'
+	}
+  }
+}//updateStyle
+</script>
+ 
