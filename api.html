@@ -344,7 +344,7 @@ onchange = "showMessage(this.value , 'setOpacity');fxopacity = $('#sliderOpacity
 
 <fedex-card id="expressCard" class="fxcardclass" width=100% height=350 c=slateblue layer=2 trans=1 x=0 y=0> 
  
-<slot id="setTitle4"><img src="car.jpg" style="width: 100%; height:100%;filter: contrast(20%) brightness(150%);" /></slot>
+<img slot="backimg" src="car.jpg" style="width: 100%; height:100%;filter: contrast(20%) brightness(150%);" /> 
 
 <slot><span style="position:absolute;left:20px;top:15px;z-index:10;font-family:roboto;font-size:75px;color:rgb(77,20,140);font-weight:bold;">Fed<span style="color:rgb(255,102,0)">Ex</span><br /><span style="color:rgb(77,20,140);font-family:roboto;font-size:28px;font-weight:bold;top:30px;">Station: OLV</span></slot> 
 
@@ -425,7 +425,7 @@ $("#full").spectrum({
 
 
 //setting content of slots...called by the ok buttons in the property box
-function textSlot1(fxselelement) 
+/*function textSlot1(fxselelement) 
 {
 var str = fxselelement;
 var res = str.charAt(0);
@@ -435,7 +435,7 @@ switch (res) {
 	jill = document.getElementById(fxselelement); //object return only
 	acc = $(jill).attr('id'); //actual text of the element id
 	popo = $('#setTitle4').val();
-	jill.children[0].innerHTML = '<img src=' + popo + 'style="max-height: 100%; max-width: 100%;" />';
+	jill.children[0].innerHTML = '<img src=' + popo + ' style="max-height: 100%; max-width: 100%;" />';
 	jill.children[1].innerText = $('#setTitle1').val();
 	jill.children[2].innerText = $('#setTitle2').val();
 	jill.children[3].innerText = $('#setTitle3').val();
@@ -451,10 +451,10 @@ switch (res) {
 	jill.children[3].innerText = $('#setTitle3').val();
     break; 
 } 
-} 
+}*/
 
-$(function(){       //activated with the onchange event from the choose file button on the propbox.  This needs
-                    //no inline call...it just happens when the image file is selected.
+$(function(){                               //activated with the onchange event from the choose file button on the propbox.  This needs
+                                           //no inline call...it just happens when the image file is selected.
  
 $("#image_uploads").change(function(e){ 
 hkhk = this.files[0].name;
@@ -462,8 +462,8 @@ hkhk = this.files[0].name;
 var str1 =  '"';
 var str2 =' " ';
 var res = str1 +  hkhk  + str2; 
-alert(res);
-document.getElementById('setTitle4').value =  res ;
+ 
+document.getElementById('expressCard').children[1].innerHTML =  '<img slot="backimg" src=' + res + ' style="max-height: 100%; max-width: 100%;" />';
 });
 })
 </script>
