@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>EDX Design System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+<link rel="import" href="fx-button.html">
+
+<!--javascript-->
+
+<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="material.js"></script>
+<script src="ds-ide-V128.js"></script><!--jquery MUST COME FIRST-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+<!--<script src="//storage.googleapis.com/code.getmdl.io/1.0.1/material.min.js"></script>-->
+
+<!--CSS-->
+
+<link rel="stylesheet" href="Design-System-IDE.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+<link rel="stylesheet" href="material.css"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+<!--FONTS-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,500|Share+Tech+Mono" rel="stylesheet">
+
+<!--leaderboard   Circles and Goggle Charts-->
+<script src="circles.min.js"></script> <!--this has to be external of the template-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script><!--this needs to be external-->
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+<!--color pick dialog-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
+
+<!--MDL Slider-->
+<script>
+function showMessage(value, elemID) {
+document.getElementById(elemID).value  =  value;
+}
+</script>
+
+
+<!--expanding vertical menu in drawer  ref:http://jsbin.com/xemijitevo/edit?html,css,js,output-->
+<style>
+*{padding:0;margin:0;}
+body{font:16px/1 sans-serif}
+
+
+/*VERTICAL MENU*/
+nav.vertical{
+  position:relative;
+  background:#667;
+}
+
+/* ALL UL */
+nav.vertical ul{
+  list-style: none;
+}
+/* ALL LI */
+nav.vertical li{
+  position:relative;
+}
+/* ALL A */
+nav.vertical a{
+  display:block;
+  color:#eee;
+  text-decoration:none;
+  padding:10px 15px;
+  transition:1.5s;
+}
+/* ALL A HOVER */
+nav.vertical li:hover > a{
+color:red;
+  /*background:#778;*/
+}
+
+/* INNER UL HIDE */
+nav.vertical ul ul{
+  /*background:rgba(0,0,0,0.1);*/
+color:red
+  padding-left:20px;
+  transition: max-height 1.5s ease-out;
+  max-height:0;
+  overflow:hidden;
+}
+/* INNER UL SHOW */
+nav.vertical li:hover > ul{
+  max-height:500px;
+  transition: max-height 1.5s ease-in;
+}
+</style>
+
+</head>
+<!---------------------------------------------------------BODY----------------------------->
+<body style="background-color:#ebf0f9;">
+ 
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+
+
+<!--------------------------------------------------HEADER-------------------------------->
+<header class="mdl-layout__header">
+<div class="mdl-layout__header-row">
+
+<span style="color:white;font-family:'Roboto';font-size:32px;font-weight:bold;padding-left:5px;line-height:2.0;">Fed<span style="color:rgb(255,102,0);font-family:'Roboto';font-size:32px;font-weight:bold;line-height:1.8;">Ex</span></span> 
+
+<!--<span style="color:#ececec;font-family:'Share Tech Mono', monospace;font-size:24px;padding-left:40px;"><xmp><fx-singularity></xmp></span>-->
+ 
+
+
+      <div class="mdl-layout-spacer"></div>
+<!--<span style="color:#ececec;font-family:'Share Tech Mono', monospace;font-size:20px;float:right;padding-right:30px;">Freedom From Frameworks</span>-->
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                  mdl-textfield--floating-label mdl-textfield--align-right">
+        <label class="mdl-button mdl-js-button mdl-button--icon"
+               for="fixed-header-drawer-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="sample"
+                 id="fixed-header-drawer-exp">
+        </div>
+      </div>
+    </div>
+</header>
+
+<!-----------------------------------------------------NAV DRAWER------------------------------------->
+<div class="mdl-layout__drawer" style="background-color:rgb(80,80,80);">
+    <span class="mdl-layout-title" style="color:rgb(280,280,280);">Components</span>
+    <nav class="vertical">
+      <ul>
+        <li><a href="#">GET STARTED +</a>
+             <ul>
+                 <li><a href="#">Using components</a></li>
+                 <li><a href="#">Using embedded components</a></li>
+             </ul>
+        </li>
+
+
+        <li><a href="#">COMPONENT STATUS</a></li>
+           
+        <li><a href="#">ACTIONS +</a>
+             <ul>
+               <li><a href="#">Account connection +</a>
+                  <ul>
+                     <li><a href="#">Examples</a></li>
+                     <li><a href="#">Best practices</a></li>
+                     <li><a href="#">Content guidelines</a></li>
+                  </ul>
+              </li>
+
+              <li><a href="#">Action list +</a>
+                  <ul>
+                     <li><a href="#">Examples</a></li>
+                     <li><a href="#">Best practices</a></li>
+                     <li><a href="#">Content guidelines</a></li>
+                     <li><a href="#">Related components</a></li>
+                  </ul>
+              </li>
+
+              <li><a href="#">Button +</a>
+                  <ul>
+                     <li><a href="#">Examples</a></li>
+                     <li><a href="#">Best practices</a></li>
+                     <li><a href="#">Content guidelines</a></li>
+                     <li><a href="#">Related components</a></li>
+                  </ul>
+              </li>
+
+              <li><a href="#">Button Group +</a>
+                  <ul>
+                     <li><a href="#">Examples</a></li>
+                     <li><a href="#">Best practices</a></li>
+                     <li><a href="#">Content guidelines</a></li>
+                     <li><a href="#">Related components</a></li>
+                  </ul>
+              </li>
+
+              <li><a href="#">Drop zone +</a>
+                  <ul>
+                     <li><a href="#">Examples</a></li>
+                     <li><a href="#">Best practices</a></li>
+                     <li><a href="#">Content guidelines</a></li>
+                     <li><a href="#">Drop zone file upload</a></li>
+                     <li><a href="#">Related components</a></li>
+                  </ul>
+              </li>
+
+              <li><a href="#">Setting toggle +</a>
+                  <ul>
+                     <li><a href="#">Examples</a></li>
+                     <li><a href="#">Best practices</a></li>
+                     <li><a href="#">Content guidelines</a></li>
+                     <li><a href="#">Related components</a></li>
+                  </ul>
+              </li>
+            </ul> 
+
+                 
+              
+
+                          <li><a href="#">Sites +</a>
+                                       <ul>
+                                              <li><a href="#">Site 1</a></li>
+                                              <li><a href="#">Site 2</a></li>
+                                      </ul>
+                          </li>
+
+
+
+
+                <li><a href="#">Gadgets +</a>
+                         <ul>
+                                <li><a href="#">Gadget 1</a></li>
+                                <li><a href="#">Gadget 2</a></li>
+                        </ul>
+               </li>
+            </ul>
+        
+
+
+        </li>
+        <li><a href="">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+
+<!-----------------------------------------------------GRID/CONTENT-------------------------->
+<main class="mdl-layout__content">
+<div class="page-content">
+<DIV class="content-grid mdl-grid" id="mdlGrid">
+
+<!--Row 1-->	
+<div id="stuff8" class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone" style="padding:30px;">
+<span style="font-size:32px;font-face:bold;">fx-button</span><br /><br />
+
+ 
+</div><!--row 1 end-->
+
+ 
+
+<!---------------------------------------------------This is the BUTTON element declarative html------------------------------>
+<!--fedex orange is rgb(255,102,0) and fedex purple is rgb(77,20,140)-->
+<!--row 2 right column This is the custom element/component sample-->
+<div id="stuff10" class="mdl-cell mdl-cell--12-col">
+
+<!--Square 3D-->
+<p style="font-family:roboto thin;font-size:28px;color:gray;padding:10px;">3D Square</p> 
+
+<fx-button class="fxbuttonclass" width = 200 height = 60 c=rgb(255,102,0) layer=2 trans=1 x=10 y=10 radius=0 textSize=26 outlineWeight= '' 3d= '5px 5px 10px rgb(170 170 170)'> 
+<span slot="caption" style="position:absolute;top:20px;left:40px;">3D Square</span>
+</fx-button>
+
+<fx-button class="fxbuttonclass" width = 100 height = 30 c=rgb(77,20,140) layer=2 trans=1 x=10 y=30 radius=0 textSize=14 outlineWeight= '' 3d= '5px 5px 10px rgb(170 170 170)'> 
+<span slot="caption" style="position:absolute;top:8px;left:20px;">3D Square</span>
+</fx-button>
+
+<!--Round 3D-->
+
+<p style="font-family:roboto thin;font-size:28px;color:gray;position:relative;left:10px;top:50px;">3D Round</p> 
+
+<fx-button class="fxbuttonclass" width = 200 height = 60 c=rgb(255,102,0) layer=2 trans=1 x=10 y=50 radius=12 textSize=26 outlineWeight= '' 3d= '5px 5px 10px rgb(170 170 170)'> 
+<span slot="caption" style="position:absolute;top:20px;left:40px;">3D Round</span>
+</fx-button>
+
+<fx-button class="fxbuttonclass" width = 100 height = 30 c=rgb(77,20,140) layer=2 trans=1 x=10 y=70 radius=8 textSize=14 outlineWeight= '' 3d= '5px 5px 10px rgb(170 170 170)'> 
+<span slot="caption" style="position:absolute;top:8px;left:20px;">3D Round</span>
+</fx-button>
+
+
+
+<!--Pill 3D-->
+
+<p style="font-family:roboto thin;font-size:28px;color:gray;position:relative;left:10px;top:100px;">3D Pill</p> 
+
+<fx-button class="fxbuttonclass" width = 200 height = 60 c=rgb(255,102,0) layer=2 trans=1 x=10 y=90 radius=40 textSize=26 outlineWeight= '' 3d= '5px 5px 10px rgb(170 170 170)' > 
+<span slot="caption" style="position:absolute;top:20px;left:60px;">3D Pill</span>
+</fx-button>
+
+<fx-button class="fxbuttonclass" width = 100 height = 30 c=rgb(77,20,140) layer=2 trans=1 x=10 y=110 radius=40 textSize=14 outlineWeight= '' 3d= '5px 5px 10px rgb(170 170 170)' > 
+<span slot="caption" style="position:absolute;top:8px;left:28px;">3D Pill</span>
+</fx-button>
+
+
+
+
+<!--Transparent Square-->
+<p style="font-family:roboto thin;font-size:28px;color:gray;position:relative;left:10px;top:150px;">Transparent Square</p> 
+
+<fx-button class="fxbuttonclass" width = 200 height = 60 c=transparent layer=2 trans=1 x=10 y=150 radius=0 textSize=26 outlineWeight='thin silver solid'  > 
+<span slot="caption" style="position:absolute;top:20px;left:40px;">3D Square</span>
+</fx-button>
+
+<fx-button class="fxbuttonclass" width = 100 height = 30 c=transparent layer=2 trans=1 x=10 y=170 radius=0 textSize=14 outlineWeight='thin solid silver'  > 
+<span slot="caption" style="position:absolute;top:8px;left:20px;">3D Square</span>
+</fx-button>
+
+
+<div style="padding:10px;padding-top:170px;">
+<h4>CODE</span></h4> 
+
+
+<!----------------------CODE TEXT----------------------------------->
+<xmp><fx-button  id="expressButton" class="fxbuttonclass" width = height= c= layer=  trans=  x=  y= radius= textSize= outlineWeight=' ' "> 
+<span slot="caption" style="position:absolute;top:20px;left:50px;">Caption</span>
+</fx-button> </xmp> 
+</div>
+
+</div><!--row 2 right column-->
+
+<div id="stuff8" class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone" style="padding-top:10px;padding-left:20px;padding-right:20px;">
+
+<h3>Element <xmp style="display:inline;"><fx-button></xmp></h3>
+<h4>class extends HTMLElement</h4>
+<p style="font-size:18px;">Path: ../fx-button.html</p>
+<h5>Description</h5>
+
+<div style="margin:10px;">
+<h5>Usage</h5>
+
+The fx-button element...  
+
+<h5>Styling</h5>
+
+The following options are available for styling:<br /><br />
+
+<style>
+table .props {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 70%;
+}
+
+td, th   {
+    
+    text-align: left;
+    padding: 8px;
+}
+
+ 
+</style>
+</head>
+<body>
+
+Options
+<xmp><ul style="font-size:18px;">
+<li>id: add a unique ID to the shortcode.
+<li>class: add a class or multiple classes to the shortcode.
+<li>style: add inline styles to the shortcode.
+<li>type: “real,” “flat,” or “transparent.”
+<li>shape: “square,” “rounded,” or “pill.”
+<li>size: “mini,” “small,” “regular,” “large,” “x-large,” or “jumbo.”
+<li>float: “left” or “right.”
+<li>block: set to “true” to make buttons go full width.
+<li>circle: set to “true” to add a marketing circle around your button.
+<li>icon_only: set to “true” if you are only using an icon in the button with no text.
+<li>href: input the URL you want your button to link to.
+<li>title: input the content for the title attribute of your button.
+<li>target: set to “blank” if you would like your button link to open in a new window.
+<li>info: “popover” or “tooltip.”
+<li>info_place: “top,” “left,” “right,” or “bottom.”
+<li>info_trigger: “hover,” “click,” or “focus.”
+<li>info_content: if you have selected a popover, place in your additional content here. 
+</ul></xmp>
+
+<h5>Properties</h5>
+
+<strong>fullBleed</strong>: boolean = false<br /><br />
+Set to true to remove all padding from the main content area of the card. Should only be used for displaying graphics like images or maps within a card.<br /><br />
+
+<strong>headerText</strong>: string<br /><br />
+Text to display in the card header.<br /><br />
+
+<strong>hideHeader</strong>: boolean = false<br /><br />
+Set to true to hide the card header. Hides the header text, icon, and actions.<br /><br />
+
+<strong>icon</strong>: string<br /><br />
+Icon that appears to the left of the card header text. Should be a valid icon name from the Predix icon set.
+</div>
+
+</div>
+</div>
+</main>
+ 
+<!--<p>Fedex Enterprise XD UI Components, and the technology they're built on, is not a framework. They're a set of small pieces that can fit into the framework your team chooses to build with.  Our components are built to work inside all modern JavaScript frameworks, or to work on their own with no framework at all.</p>
+
+<p>Each one is a web component, a self-contained bundle of HTML, JavaScript, and CSS that looks and works just like a standard HTML tag. In fact, they are standard HTML tags. The technologies used to make web components—Custom Elements and Shadow DOM—are part of the standard web platform</p>
+
+Web components are an amazing new feature of the web, allowing developers to define their own custom HTML elements. When combined with a style guide, web components can create a component API, which allows developers to stop copying and pasting code snippets and instead just use a DOM element. By using the shadow DOM, we can encapsulate the web component and not have to worry about specificity wars with any other style sheet on the page.-->
+ 
+	
+</body>
+
+<!--color picker script can't be external because its a component-->
+<!--https://bgrins.github.io/spectrum/-->
+
+
+<script>
+$("#full").spectrum({
+    color: "#ECC",
+    showInput: true,
+    className: "full-spectrum",
+    showInitial: true,
+    showPalette: true,
+    showSelectionPalette: true,
+    maxSelectionSize: 10,
+    preferredFormat: "hex",
+    localStorageKey: "spectrum.demo",
+    move: function (color) {
+        
+    },
+    show: function () {
+    
+    },
+    beforeShow: function () {
+    
+    },
+    hide: function () {
+    
+    },
+    
+	change: function(color) {     //change is a jquery function.  
+    cc = color.toHexString();
+    document.getElementById('expressCard').setAttribute('c', cc);           //set a global variable for elementStyle()
+	},
+    
+	palette: [
+        ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
+        "rgb(204, 204, 204)", "rgb(217, 217, 217)","rgb(255, 255, 255)"],
+        ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)",
+        "rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"], 
+        ["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)", 
+        "rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)", 
+        "rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)", 
+        "rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)", 
+        "rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)", 
+        "rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)",
+        "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+        "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)",
+        "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)", 
+        "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
+    ]
+});
+
+
+
+//setting content of slots...called by the ok buttons in the property box
+/*function textSlot1(fxselelement) 
+{
+var str = fxselelement;
+var res = str.charAt(0);
+//alert(fxselelement);
+switch (res) {
+    case "H":
+	jill = document.getElementById(fxselelement); //object return only
+	acc = $(jill).attr('id'); //actual text of the element id
+	popo = $('#setTitle4').val();
+	jill.children[0].innerHTML = '<img src=' + popo + ' style="max-height: 100%; max-width: 100%;" />';
+	jill.children[1].innerText = $('#setTitle1').val();
+	jill.children[2].innerText = $('#setTitle2').val();
+	jill.children[3].innerText = $('#setTitle3').val();
+	break;
+	
+	case "C":
+	jill = document.getElementById(fxselelement); //object return only
+	acc = $(jill).attr('id'); //actual text of the element id
+	popo1 = $('#setTitle4').val();
+	jill.children[0].innerHTML = '<img src=' + popo1 + 'style="max-height: 100%; max-width: 100%;" />';
+    jill.children[1].innerText = $('#setTitle1').val();
+	jill.children[2].innerText = $('#setTitle2').val();
+	jill.children[3].innerText = $('#setTitle3').val();
+    break; 
+} 
+}*/
+
+$(function(){                               //activated with the onchange event from the choose file button on the propbox.  This needs
+                                           //no inline call...it just happens when the image file is selected.
+ 
+$("#image_uploads").change(function(e){ 
+hkhk = this.files[0].name;
+ 
+var str1 =  '"';
+var str2 =' " ';
+var res = str1 +  hkhk  + str2; 
+ 
+document.getElementById('expressCard').children[1].innerHTML =  '<img slot="backimg" src=' + res + ' + style="width: 100%; height:100%;filter: contrast(20%) brightness(150%);" />';
+});
+})
+
+ 
+</script>
+</html>

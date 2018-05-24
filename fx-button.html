@@ -1,0 +1,54 @@
+<!--BUTTON-->
+<template id="fedexbutton" >
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="Design-System-IDE.css"/>
+<div class="fxbuttonclass" style="position:relative;font-family:roboto;">
+ <slot name="caption">Caption</slot> 
+</div>
+</template>
+
+<script>
+let tmpl = document.currentScript.ownerDocument.querySelector('#fedexbutton'); //unique for imports only
+customElements.define('fx-button', class extends HTMLElement {   
+static get observedAttributes() {return ['width', 'height', 'c', 'layer', 'trans', 'x', 'y', 'radius', 'textSize', 'outlineWeight', '3d' ]; }
+constructor() {
+      super(); 
+	  let shadowRoot = this.attachShadow({mode: 'open'});  
+	  shadowRoot.appendChild(tmpl.content.cloneNode(true));
+	  var style = document.createElement('style'); 
+      shadowRoot.appendChild(style);
+} //constructor
+
+connectedCallback() {
+updateStyleCard(this);   
+}   
+
+attributeChangedCallback(name, oldValue, newValue) {
+updateStyleCard(this);
+}
+
+})
+
+function updateStyleCard(elem) {   
+  var shadow = elem.shadowRoot;
+  var childNodes = shadow.childNodes;
+  for(var i = 0; i < childNodes.length; i++) {
+    if(childNodes[i].nodeName === 'STYLE') {   //building the inline element style
+      childNodes[i].textContent = '.fxbuttonclass {' +
+						  ' width: ' + elem.getAttribute('width') + 'px;' +     
+                          ' height: ' + elem.getAttribute('height') + 'px;' +
+                          ' background-color: ' + elem.getAttribute('c') + ';' +  
+		          ' z-index: ' + elem.getAttribute('layer') + ';' +  
+			  ' opacity: ' + elem.getAttribute('trans') + ';' +				  
+                          ' left: ' + elem.getAttribute('x') + 'px;' + 
+                          ' top: '  + elem.getAttribute('y') + 'px;' +  
+                          ' border-radius: '  + elem.getAttribute('radius') + 'px;' + 
+                          ' font-size: '  + elem.getAttribute('textSize') + 'px;' +  
+                          ' border: '  + elem.getAttribute('outlineWeight') + ';' +   
+                          ' box-shadow: '  + elem.getAttribute('3d') + ';' +  '}'
+                         
+                          
+	}
+  }
+}//updateStyle
+</script>
