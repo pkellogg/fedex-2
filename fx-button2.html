@@ -1,0 +1,45 @@
+<!--BUTTON-->
+<template id="fedexbutton2">
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="Design-System-IDE.css"/>
+
+<div class="fxbuttonclass" >
+<slot name="caption">Caption</slot>
+<style>
+:host {
+  cursor:pointer;
+  
+}
+
+:host(:hover) {
+  font-size:56px;
+}
+</style>
+ 
+</div>
+<!--style="position:relative;font-family:roboto;-webkit-transition-duration: 0.4s;transition-duration: 0.4s;cursor: pointer;"-->
+</template>
+
+<script>
+let tmpl = document.currentScript.ownerDocument.querySelector('#fedexbutton2');  
+customElements.define('fx-button2', class extends HTMLElement {  static get observedAttributes() {return [ ]; 
+ }
+constructor() {
+      super(); 
+	  let shadowRoot = this.attachShadow({mode: 'open'});  
+	  shadowRoot.appendChild(tmpl.content.cloneNode(true));
+	  
+} //constructor
+
+connectedCallback() {
+ 
+}   
+
+attributeChangedCallback(name, oldValue, newValue) {
+ 
+}
+
+})
+
+
+</script>
